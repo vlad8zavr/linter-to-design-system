@@ -4,7 +4,7 @@
 * @return {array} — Массив ошибок 
 */
 
-function runEngineTemplate(bem) {
+function runLinter(bem) {
 
     const orderPath = [];
     const classesArray = [];
@@ -89,6 +89,7 @@ function runEngineTemplate(bem) {
     let mistake1CompareSize = null;
     let mistake2CompareSize = null;
     let mistake3CompareSize = null;
+    let mistake4CompareSize = null;
 
     const isArray = arr => {
         return Object.prototype.toString.call(arr) == '[object Array]';
@@ -302,7 +303,7 @@ function runEngineTemplate(bem) {
 
       for (let i = 0, length = arrayOfJsonLines.length; i < length; i++) {
 
-        if (arrayOfJsonLines[i].match('form') && arrayOfJsonLines[i + 1] && arrayOfJsonLines[i + 1].match('content')) {
+        if (arrayOfJsonLines[i].match('form') && arrayOfJsonLines[i + 1] && arrayOfJsonLines[i + 1].match('"content":')) {
 
 
           console.log(`i = ${i} (i - 1 = ${i - 1})\n`);
@@ -345,6 +346,7 @@ function runEngineTemplate(bem) {
           isExistMistake1(i, numberOfForm);
           isExistMistake2(i, numberOfForm);
           isExistMistake3(i, numberOfForm);
+          isExistMistake4(i, numberOfForm);
 
           if (orderPath[i + 1].order <= startForm) {
             whithinForm = false;
@@ -353,6 +355,7 @@ function runEngineTemplate(bem) {
             mistake1CompareSize = null;
             mistake2CompareSize = null;
             mistake3CompareSize = null;
+            mistake4CompareSize = null;
 
             console.log('-- CLEAR COMPARED SIZES --');
           }
@@ -451,62 +454,75 @@ function runEngineTemplate(bem) {
     }
 
     const isExistMistake3 = (i, numberOfForm) => {
-      console.log('[isExistMistake3]');
-
-      console.log(`numberOfForm = ${numberOfForm}`);
-      console.log(`orderPath[i].classList = ${orderPath[i].classList}`);
-      console.log(`mistake3CompareSize = ${mistake3CompareSize}`);
-
 
       if (orderPath[i].classList.match('input_size_')) {
 
         let inputSize = retrieveModSizeFromClassList('input_size_', i);
 
-        console.log('CONDITION IF');
-        console.log(`inputSize = ${inputSize}`);
-
         if (mistake3CompareSize == null) {
           mistake3CompareSize = listOfSizes[inputSize];
         }
         else if ( (mistake3CompareSize - listOfSizes[inputSize]) != 1 ) {
-          
-          console.log('PUSH TO MISTAKES ARRAY');
+
           resultMistakesArray.push({"code": listOfMistakesForm[2]["code"],
                                     "error": listOfMistakesForm[2]["error"]});
 
           resultMistakesArray[resultMistakesArray.length - 1]["location"] = numberOfForm;
           mistake3CompareSize = null;
         }
-
-        console.log(`mistake3CompareSize = ${mistake3CompareSize}`);
-
       }
       else if (orderPath[i].classList.match('form__item_space-h_')) {
         
         let formItemSize = retrieveModSizeFromClassList('form__item_space-h_', i);
-
-        console.log('CONDITION ELSE IF');
-        console.log(`formItemSize = ${formItemSize}`);
 
         if (mistake3CompareSize == null) {
           mistake3CompareSize = listOfSizes[formItemSize];
         }
         else if ( (listOfSizes[formItemSize] - mistake3CompareSize) != 1 ) {
           
-          console.log('PUSH TO MISTAKES ARRAY');
           resultMistakesArray.push({"code": listOfMistakesForm[2]["code"],
                                     "error": listOfMistakesForm[2]["error"]});
 
           resultMistakesArray[resultMistakesArray.length - 1]["location"] = numberOfForm;
           mistake3CompareSize = null;
         }
-
-        console.log(`mistake3CompareSize = ${mistake3CompareSize}`);
-
       }
     }
 
+    const isExistMistake4 = (i, numberOfForm) => {
+      if (orderPath[i].classList.match('input_size_')) {
 
+        let inputSize = retrieveModSizeFromClassList('input_size_', i);
+
+        if (mistake4CompareSize == null) {
+          mistake4CompareSize = listOfSizes[inputSize];
+        }
+        else if ( (mistake4CompareSize - listOfSizes[inputSize]) != 1 ) {
+
+          resultMistakesArray.push({"code": listOfMistakesForm[3]["code"],
+                                    "error": listOfMistakesForm[3]["error"]});
+
+          resultMistakesArray[resultMistakesArray.length - 1]["location"] = numberOfForm;
+          mistake4CompareSize = null;
+        }
+      }
+      else if (orderPath[i].classList.match('form__item_indent-b_')) {
+        
+        let formItemSize = retrieveModSizeFromClassList('form__item_indent-b_', i);
+
+        if (mistake4CompareSize == null) {
+          mistake4CompareSize = listOfSizes[formItemSize];
+        }
+        else if ( (listOfSizes[formItemSize] - mistake4CompareSize) != 1 ) {
+          
+          resultMistakesArray.push({"code": listOfMistakesForm[3]["code"],
+                                    "error": listOfMistakesForm[3]["error"]});
+
+          resultMistakesArray[resultMistakesArray.length - 1]["location"] = numberOfForm;
+          mistake4CompareSize = null;
+        }
+      }
+    }
 
     const retrieveModSizeFromClassList = (str, i) => {
       return orderPath[i].classList.split(' ').
@@ -601,4 +617,4 @@ function runEngineTemplate(bem) {
     mainLogic(bem);
 }
 
-runEngineTemplate(bem);
+runLinter(bem);
