@@ -1,1 +1,2 @@
-# linter-to-design-system
+# design-system
+Design system
