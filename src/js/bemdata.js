@@ -148,7 +148,7 @@ export default
                                 "block": "form",
                                 "elem": "content",
                                 "content": { "block": "input", "mods": { "size": "l" } },
-                                "mix": [{ "block": "form", "elem": "item", "elemMods": {  "space-v": "xxl" } }]
+                                "mix": [{ "block": "form", "elem": "item", "elemMods": {  "space-v": "xl" } }]
                             }
                         },
                         {
@@ -165,9 +165,134 @@ export default
                             "content": {
                                 "block": "form",
                                 "elem": "content",
+                                "content": [
+                                    {
+                                        "block": "form",
+                                        "elem":  "content-item",
+                                        "mix": [{ "block": "form", "elem": "item", "elemMods": { "indent-b": "l" } }],
+                                        "content": { "block": "input", "mods": { "size": "l" } }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "block": "form",
+                            "content": {
+                                "block": "form",
+                                "elem": "content",
                                 "content": { "block": "input", "mods": { "size": "l" } },
                                 "mix": [{ "block": "form", "elem": "item", "elemMods": {  "space-h": "xxl" } }]
                             }
+                        },
+                        {
+                            "block": "form",
+                            "content": [
+                                {
+                                    "block": "form",
+                                    "elem": "header",
+                                    "content": [
+                                        {
+                                            "block": "text",
+                                            "mods": {
+                                                "size": "xl"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "block": "input",
+                                    "mods": {
+                                        "size": "l"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "block": "form",
+                            "content": [
+                                {
+                                    "block": "form",
+                                    "elem": "header",
+                                    "mix": [ { "block": "form", "elem": "item", "elemMods": { "space-v": "s" } } ]
+                                },
+                                {
+                                    "block": "input",
+                                    "mods": {
+                                        "size": "l"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "block": "form",
+                            "content": [
+                                {
+                                    "block": "form",
+                                    "elem": "header",
+                                    "mix": [ { "block": "form", "elem": "item", "elemMods": { "space-h": "l" } } ]
+                                },
+                                {
+                                    "block": "input",
+                                    "mods": {
+                                        "size": "l"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "block": "form",
+                            "content": [
+                                {
+                                    "block": "form",
+                                    "elem": "footer",
+                                    "mix": [ { "block": "form", "elem": "item", "elemMods": { "space-v": "s" } } ]
+                                },
+                                {
+                                    "block": "input",
+                                    "mods": {
+                                        "size": "l"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "block": "form",
+                            "content": [
+                                {
+                                    "block": "form",
+                                    "elem": "footer",
+                                    "mix": [ { "block": "form", "elem": "item", "elemMods": { "space-h": "l" } } ]
+                                },
+                                {
+                                    "block": "input",
+                                    "mods": {
+                                        "size": "l"
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "block": "form",
+                            "content": [
+                                {
+                                    "block": "input",
+                                    "mods": {
+                                        "size": "l"
+                                    }
+                                },
+                                {
+                                    "block": "form",
+                                    "elem": "footer",
+                                    "content": [
+                                        {
+                                            "block": "text",
+                                            "mods": {
+                                                "size": "xxl"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
                         }
                     ]
                 },
