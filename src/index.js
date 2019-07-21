@@ -1,20 +1,53 @@
 
 import bem from './js/bemdata';
 import searchAllForms from './js/searchAllForms';
-import getOrderPath from './js/orderPath/orderPath';
-import catchFormMistakes from './js/getMistakes/getFormMistakes';
+import searchFormMistakes from './js/searchFormMistakes/searchFormMistakes';
 
-console.log('[index.js]');
+//export default function(bem) {
 
 function linter(bem) {
-    const positionOfForms = searchAllForms(bem);
-    console.log(positionOfForms);
+    
+    const lint = (bem) => {
+        const positionOfForms = searchAllForms(bem);
+        //console.log(positionOfForms);
 
-    console.log('<><><><><>');
-    const classList = getOrderPath(bem);
-    console.log(classList);
+        const resultMistakes = searchFormMistakes(positionOfForms);
+        //console.log(resultMistakes);
+        return resultMistakes;
+    }
 
-    const resultMistakesArray = catchFormMistakes(classList);
-    console.log(resultMistakesArray);
+    function isBrowser() {
+        try {
+            return window;
+        }
+        catch {
+            return false;
+        }
+    }
+
+    function isNode() {
+        try {
+            return global
+        }
+        catch {
+            return false;
+        }
+    }
+    
+    function createGlobalVariable() {
+        if (!!isBrowser()) {
+            //console.log('<><><><><> BROWSER <><><><><>');
+    
+            window.lint = lint;
+        }
+        else if (!!isNode()) {
+            //console.log('<><><><><> NODE <><><><><>');
+    
+            global.lint = lint;
+        }
+    }
+    createGlobalVariable();
+    
 }
 linter(bem);
+
