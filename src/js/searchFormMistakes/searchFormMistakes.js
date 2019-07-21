@@ -47,6 +47,19 @@ export default function(positionOfForms) {
         contentLocation: null
     };
 
+    const mistake4Data = {
+        isElemContent: false,
+        isInput: false,
+        isInputModFound: false,
+        isMix: false,
+        isElemItem: false,
+        isFormIndentB: false,
+        isMistake: false,
+        inputSize: '',
+        formIndentSize: '',
+        contentLocation: null
+    };
+
     function resetmistake1Data() {
         mistake1Data.isLabel = false;
         mistake1Data.isText = false;
@@ -87,13 +100,26 @@ export default function(positionOfForms) {
         mistake3Data.contentLocation = null;
     }
 
+    function resetmistake4Data() {
+        mistake4Data.isElemContent = false;
+        mistake4Data.isInput = false;
+        mistake4Data.isInputModFound = false;
+        mistake4Data.isMix = false;
+        mistake4Data.isElemItem = false;
+        mistake4Data.isFormIndentB = false;
+        mistake4Data.isMistake = false;
+        mistake4Data.inputSize = '';
+        mistake4Data.formIndentSize = '';
+        mistake4Data.contentLocation = null;
+    }
+
     function runValidation() {
         let position = -1;
         positionOfForms.forEach(form => {
             position++;
-            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            // console.log(form);
+            //console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            //console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            //console.log(form);
             inspectForm(form);
 
             if (hasFormContent(form)) {
@@ -122,6 +148,7 @@ export default function(positionOfForms) {
             checkMistake1(position);
             checkMistake2(position);
             checkMistake3(position);
+            checkMistake4(position);
 
             // console.log(mistake1Data);
             // console.log(mistake2Data);
@@ -129,6 +156,7 @@ export default function(positionOfForms) {
             resetmistake1Data();
             resetmistake2Data();
             resetmistake3Data();
+            resetmistake4Data();
         })
 
         //console.log(resultMistakes);
@@ -152,6 +180,7 @@ export default function(positionOfForms) {
                 detectMistake1(object[key]);
                 detectMistake2(object[key]);
                 detectMistake3(object[key]);
+                detectMistake4(object[key]);
 
 
                 inspectForm(object[key]);
@@ -461,6 +490,106 @@ export default function(positionOfForms) {
 
             if (inputSize != undefined && formSpaceSize != undefined && 
                 ((formSpaceSize - inputSize) == 1)) {
+                    return false;
+            }
+            else return true;
+        }
+        else return false;
+    }
+
+    function detectMistake4(object) {
+
+        findContentItemLocation(object);
+        if (isElementPresent(object, 'content-item')) {
+            mistake4Data.isElemContent = true;
+        }
+        if (isElementPresent(object, 'item')) {
+            mistake4Data.isElemItem = true;
+        }
+        
+
+        if (mistake4Data.isElemContent) {
+            findInputSizeMistake4(object);
+        }
+
+        if (isMix(object, mistake4Data) && mistake4Data.isElemItem) {
+            findIndentBSizeMistake4(object);
+        }
+
+    }
+
+    function findContentItemLocation(object) {
+
+        if (object.children && object.children.length >= 3 && 
+            object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'form' && 
+            object.children[1].value &&  
+            object.children[1].value.value && object.children[1].value.value == 'content-item') {
+
+            mistake4Data.contentLocation = {
+                start: {
+                    "line": object.loc.start.line, 
+                    "column": object.loc.start.column
+                },
+                end: {
+                    "line": object.loc.end.line, 
+                    "column": object.loc.end.column
+                }
+            };
+
+        }
+    }
+
+    function findInputSizeMistake4(object) {
+        if (object.value && object.value == 'input') {
+            //console.log(object);
+            mistake4Data.isInput = true;
+            mistake4Data.isInputModFound = false;
+        }
+        else if (object.key && 
+            object.key.value && object.key.value == 'size' && 
+            object.value && object.value.value && mistake4Data.isInput) {
+
+                mistake4Data.inputSize = object.value.value;
+                mistake4Data.isInput = false;
+                mistake4Data.isInputModFound = true;
+        }
+    }
+
+    function findIndentBSizeMistake4(object) {
+    
+        if (object.key && 
+            object.key.value && object.key.value == 'indent-b' && 
+            object.value && object.value.value) {
+                //console.log(object.value);
+                mistake4Data.formIndentSize = object.value.value;
+                mistake4Data.isMix = false;
+                mistake4Data.isFormIndentB = true;
+                mistake4Data.isElemItem = false;
+        }
+    }
+
+    function checkMistake4(position) {
+        if (isMistake4Exist()) {
+            mistake4Data.isMistake = true;
+
+            resultMistakes.push(
+                {"code": listOfMistakesForm[3]["code"],
+                 "error": listOfMistakesForm[3]["error"],
+                 "location": mistake4Data.contentLocation
+                }
+            );
+        }
+    }
+
+    function isMistake4Exist() {
+
+        if (mistake4Data.inputSize != '' && mistake4Data.formIndentSize != '') {
+            let inputSize = listOfSizes[mistake4Data.inputSize];
+            let formIndentSize = listOfSizes[mistake4Data.formIndentSize];
+
+            if (inputSize != undefined && formIndentSize != undefined && 
+                ((formIndentSize - inputSize) == 1)) {
                     return false;
             }
             else return true;
