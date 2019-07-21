@@ -148,7 +148,7 @@ export default
                                 "block": "form",
                                 "elem": "content",
                                 "content": { "block": "input", "mods": { "size": "l" } },
-                                "mix": [{ "block": "form", "elem": "item", "elemMods": {  "space-v": "xl" } }]
+                                "mix": [{ "block": "form", "elem": "item", "elemMods": {  "space-v": "xxl" } }]
                             }
                         },
                         {
