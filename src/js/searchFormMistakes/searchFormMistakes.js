@@ -34,6 +34,19 @@ export default function(positionOfForms) {
         contentLocation: null
     };
 
+    const mistake3Data = {
+        isElemContent: false,
+        isInput: false,
+        isInputModFound: false,
+        isMix: false,
+        isElemItem: false,
+        isFormSpaceV: false,
+        isMistake: false,
+        inputSize: '',
+        formSpaceSize: '',
+        contentLocation: null
+    };
+
     function resetmistake1Data() {
         mistake1Data.isLabel = false;
         mistake1Data.isText = false;
@@ -61,13 +74,26 @@ export default function(positionOfForms) {
         mistake2Data.contentLocation = null;
     }
 
+    function resetmistake3Data() {
+        mistake3Data.isElemContent = false;
+        mistake3Data.isInput = false;
+        mistake3Data.isInputModFound = false;
+        mistake3Data.isMix = false;
+        mistake3Data.isElemItem = false;
+        mistake3Data.isFormSpaceV = false;
+        mistake3Data.isMistake = false;
+        mistake3Data.inputSize = '';
+        mistake3Data.formSpaceSize = '';
+        mistake3Data.contentLocation = null;
+    }
+
     function runValidation() {
         let position = -1;
         positionOfForms.forEach(form => {
             position++;
-            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            console.log(form);
+            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            // console.log(form);
             inspectForm(form);
 
             if (hasFormContent(form)) {
@@ -80,22 +106,29 @@ export default function(positionOfForms) {
                         "line": form.children[1].loc.end.line, 
                         "column": form.children[1].loc.end.column
                     }
-                }
-                // console.log('---------------------------------------------------');
-                // console.log('[detectMistake2] mistake2Data.contentLocation = ');
-                // console.log(mistake2Data.contentLocation);
-                // console.log('---------------------------------------------------');
-    
+                };
+                mistake3Data.contentLocation = {
+                    start: {
+                        "line": form.children[1].loc.start.line, 
+                        "column": form.children[1].loc.start.column
+                    },
+                    end: {
+                        "line": form.children[1].loc.end.line, 
+                        "column": form.children[1].loc.end.column
+                    }
+                };    
             }
 
             checkMistake1(position);
             checkMistake2(position);
+            checkMistake3(position);
 
             // console.log(mistake1Data);
             // console.log(mistake2Data);
 
             resetmistake1Data();
             resetmistake2Data();
+            resetmistake3Data();
         })
 
         //console.log(resultMistakes);
@@ -118,6 +151,7 @@ export default function(positionOfForms) {
 
                 detectMistake1(object[key]);
                 detectMistake2(object[key]);
+                detectMistake3(object[key]);
 
 
                 inspectForm(object[key]);
@@ -244,24 +278,6 @@ export default function(positionOfForms) {
 
     function detectMistake2(object) {
 
-        // if (hasFormContent(object)) {
-        //     mistake2Data.contentLocation = {
-        //         start: {
-        //             "line": object.children[1].loc.start.linee, 
-        //             "column": object.children[1].loc.start.column
-        //         },
-        //         end: {
-        //             "line": object.children[1].loc.end.line, 
-        //             "column": object.children[1].loc.end.column
-        //         }
-        //     }
-        //     console.log('---------------------------------------------------');
-        //     console.log('[detectMistake2] mistake2Data.contentLocation = ');
-        //     console.log(mistake2Data.contentLocation);
-        //     console.log('---------------------------------------------------');
-
-        // }
-
         if (isElementPresent(object, 'content')) {
             mistake2Data.isElemContent = true;
         }
@@ -285,18 +301,7 @@ export default function(positionOfForms) {
             
             if (object.children[0].value) {
 
-                // console.log('------------------------------------------------------------');
-                // console.log('[hasFormContent] object.children.length == 2');
-                // console.log('object.children[0].value');
-                // console.log(object.children[0].value);
-                // console.log('------------------------------------------------------------');
-
                 if (object.children[0].value.value && object.children[0].value.value == 'form') {
-    
-                    // console.log('------------------------------------------------------------');
-                    // console.log('[hasFormContent] object.children.length == 2');
-                    // console.log("object.children[0].value.value == 'form'");
-                    // console.log('------------------------------------------------------------');
     
                     if (object.children[1].key && 
                         object.children[1].key.value && object.children[1].key.value == 'content') {
@@ -311,7 +316,7 @@ export default function(positionOfForms) {
         else return false;
     }
 
-    function isElementPresent(object, value, element) {
+    function isElementPresent(object, value) {
         if (object.key && 
             object.key.value && object.key.value == 'elem' && 
             object.value && 
@@ -362,11 +367,6 @@ export default function(positionOfForms) {
         if (isMistake2Exist()) {
             mistake2Data.isMistake = true;
 
-            // let start = {"line": positionOfForms[position].loc.start.line, 
-            //              "column": positionOfForms[position].loc.start.column};
-            // let end = {"line": positionOfForms[position].loc.end.line, 
-            //              "column": positionOfForms[position].loc.end.column};
-
             resultMistakes.push(
                 {"code": listOfMistakesForm[1]["code"],
                  "error": listOfMistakesForm[1]["error"],
@@ -390,6 +390,88 @@ export default function(positionOfForms) {
         }
         else return false;
     }
+
+    function detectMistake3(object) {
+
+        if (isElementPresent(object, 'content')) {
+            mistake3Data.isElemContent = true;
+        }
+        if (isElementPresent(object, 'item')) {
+            mistake3Data.isElemItem = true;
+        }
+        
+
+        if (mistake3Data.isElemContent) {
+            findInputSizeMistake3(object);
+        }
+
+        if (isMix(object, mistake3Data) && mistake3Data.isElemItem) {
+            findSpaceHSizeMistake3(object);
+        }
+
+    }
+
+    function findInputSizeMistake3(object) {
+        if (object.value && object.value == 'input') {
+            //console.log(object);
+            mistake3Data.isInput = true;
+            mistake3Data.isInputModFound = false;
+        }
+        else if (object.key && 
+            object.key.value && object.key.value == 'size' && 
+            object.value && object.value.value && mistake3Data.isInput) {
+
+                mistake3Data.inputSize = object.value.value;
+                mistake3Data.isInput = false;
+                mistake3Data.isInputModFound = true;
+        }
+    }
+
+    function findSpaceHSizeMistake3(object) {
+    
+        if (object.key && 
+            object.key.value && object.key.value == 'space-h' && 
+            object.value && object.value.value) {
+                //console.log(object.value);
+                mistake3Data.formSpaceSize = object.value.value;
+                mistake3Data.isMix = false;
+                mistake3Data.isFormSpaceV = true;
+                mistake3Data.isElemItem = false;
+        }
+    }
+
+    function checkMistake3(position) {
+        if (isMistake3Exist()) {
+            mistake3Data.isMistake = true;
+
+            resultMistakes.push(
+                {"code": listOfMistakesForm[2]["code"],
+                 "error": listOfMistakesForm[2]["error"],
+                 "location": mistake3Data.contentLocation
+                }
+            );
+        }
+    }
+
+    function isMistake3Exist() {
+
+        if (mistake3Data.inputSize != '' && mistake3Data.formSpaceSize != '') {
+            let inputSize = listOfSizes[mistake3Data.inputSize];
+            let formSpaceSize = listOfSizes[mistake3Data.formSpaceSize];
+
+            if (inputSize != undefined && formSpaceSize != undefined && 
+                ((formSpaceSize - inputSize) == 1)) {
+                    return false;
+            }
+            else return true;
+        }
+        else return false;
+    }
+
+
+
+
+
 
     runValidation();
     return resultMistakes;
