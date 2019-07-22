@@ -124,6 +124,18 @@ export default function(positionOfForms) {
         location: null
     };
 
+    const mistake10Data = {
+        isFooter: false,
+        isText: false,
+        isTextModFound: false,
+        isInput: false,
+        isInputModFound: false,
+        isMistake: false,
+        textSize: '',
+        inputSize: '',
+        location: null
+    };
+
 
     function resetmistake1Data() {
         mistake1Data.isLabel = false;
@@ -242,6 +254,17 @@ export default function(positionOfForms) {
         mistake9Data.location = null;
     }
 
+    function resetmistake10Data() {
+        mistake10Data.isFooter = false;
+        mistake10Data.isText = false;
+        mistake10Data.isTextModFound = false;
+        mistake10Data.isInput = false;
+        mistake10Data.isInputModFound = false;
+        mistake10Data.isMistake = false;
+        mistake10Data.textSize = '';
+        mistake10Data.inputSize = '';
+        mistake10Data.location = null;
+    }
 
 
     function runValidation() {
@@ -286,7 +309,7 @@ export default function(positionOfForms) {
             checkMistake7(position);
             checkMistake8(position);
             checkMistake9(position);
-
+            checkMistake10(position);
 
 
             resetmistake1Data();
@@ -298,6 +321,7 @@ export default function(positionOfForms) {
             resetmistake7Data();
             resetmistake8Data();
             resetmistake9Data();
+            resetmistake10Data();
         })
 
         //console.log(resultMistakes);
@@ -327,6 +351,7 @@ export default function(positionOfForms) {
                 detectMistake7(object[key]);
                 detectMistake8(object[key]);
                 detectMistake9(object[key]);
+                detectMistake10(object[key]);
 
 
                 inspectForm(object[key]);
@@ -1253,6 +1278,104 @@ export default function(positionOfForms) {
         }
         else return false;
     }
+
+    function detectMistake10(object) {
+
+        findTextLocation10(object);
+        findTextSizeMistake10(object);
+        findInputSizeMistake10(object);
+    }
+  
+    function findTextLocation10(object) {
+
+        if (object.children && object.children.length >= 2) {
+
+            if (object.children[0].value && 
+                object.children[0].value.value && object.children[0].value.value == 'text') {
+        
+                mistake10Data.location = {
+                    start: {
+                        "line": object.loc.start.line, 
+                        "column": object.loc.start.column
+                    },
+                    end: {
+                        "line": object.loc.end.line, 
+                        "column": object.loc.end.column
+                    }
+                };
+            }
+        }
+    }
+
+    function findTextSizeMistake10(object) {
+        if (object.value && object.value == 'footer') {
+            //console.log(object);
+            mistake10Data.isFooter = true;
+            mistake10Data.isTextModFound = false;
+        }
+        else if (object.value && object.value == 'text' && mistake10Data.isFooter && !mistake10Data.isTextModFound) {
+            //console.log(object);
+            mistake10Data.isText = true;
+        }
+        else if (object.key && 
+            object.key.value && object.key.value == 'size' && 
+            object.value && object.value.value && mistake10Data.isText) {
+                //console.log(object.value);
+                mistake10Data.textSize = object.value.value;
+                mistake10Data.isFooter = false;
+                mistake10Data.isText = false;
+                mistake10Data.isTextModFound = true;
+                //console.log(mistake1Data);
+        }
+    }
+
+    function findInputSizeMistake10(object) {
+        if (object.value && object.value == 'input') {
+            //console.log(object);
+            mistake10Data.isInput = true;
+            mistake10Data.isInputModFound = false;
+        }
+        else if (object.key && 
+            object.key.value && object.key.value == 'size' && 
+            object.value && object.value.value && mistake10Data.isInput) {
+                //console.log(object.value);
+                mistake10Data.inputSize = object.value.value;
+                mistake10Data.isInput = false;
+                mistake10Data.isInputModFound = true;
+                //console.log(mistake1Data);
+        }
+    }
+
+    function checkMistake10(position) {
+        if (isMistake10Exist()) {
+            //console.log('MISTAKES');
+            mistake10Data.isMistake = true;
+
+            resultMistakes.push(
+                {"code": listOfMistakesForm[9]["code"],
+                 "error": listOfMistakesForm[9]["error"],
+                 "location": mistake10Data.location
+                }
+            );
+        }
+    }
+
+    function isMistake10Exist() {
+
+        if (mistake10Data.inputSize != '' && mistake10Data.textSize != '') {
+            let inputSize = listOfSizes[mistake10Data.inputSize];
+            let textSize = listOfSizes[mistake10Data.textSize];
+
+            if (inputSize != undefined && textSize != undefined && 
+                ((textSize - inputSize) == 0)) {
+                    return false;
+            }
+            else return true;
+        }
+        else return false;
+    }
+
+
 
 
 
