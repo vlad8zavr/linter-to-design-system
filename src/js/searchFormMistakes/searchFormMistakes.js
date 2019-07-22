@@ -60,6 +60,18 @@ export default function(positionOfForms) {
         contentLocation: null
     };
 
+    const mistake5Data = {
+        isHeader: false,
+        isText: false,
+        isTextModFound: false,
+        isInput: false,
+        isInputModFound: false,
+        isMistake: false,
+        textSize: '',
+        inputSize: '',
+        location: null
+    };
+
     function resetmistake1Data() {
         mistake1Data.isLabel = false;
         mistake1Data.isText = false;
@@ -113,13 +125,25 @@ export default function(positionOfForms) {
         mistake4Data.contentLocation = null;
     }
 
+    function resetmistake5Data() {
+        mistake5Data.isHeader = false;
+        mistake5Data.isText = false;
+        mistake5Data.isTextModFound = false;
+        mistake5Data.isInput = false;
+        mistake5Data.isInputModFound = false;
+        mistake5Data.isMistake = false;
+        mistake5Data.textSize = '';
+        mistake5Data.inputSize = '';
+        mistake5Data.location = null;
+    }
+
     function runValidation() {
         let position = -1;
         positionOfForms.forEach(form => {
             position++;
-            //console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            //console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            //console.log(form);
+            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            // console.log(form);
             inspectForm(form);
 
             if (hasFormContent(form)) {
@@ -149,6 +173,7 @@ export default function(positionOfForms) {
             checkMistake2(position);
             checkMistake3(position);
             checkMistake4(position);
+            checkMistake5(position);
 
             // console.log(mistake1Data);
             // console.log(mistake2Data);
@@ -157,6 +182,7 @@ export default function(positionOfForms) {
             resetmistake2Data();
             resetmistake3Data();
             resetmistake4Data();
+            resetmistake5Data();
         })
 
         //console.log(resultMistakes);
@@ -181,6 +207,7 @@ export default function(positionOfForms) {
                 detectMistake2(object[key]);
                 detectMistake3(object[key]);
                 detectMistake4(object[key]);
+                detectMistake5(object[key]);
 
 
                 inspectForm(object[key]);
@@ -597,6 +624,101 @@ export default function(positionOfForms) {
         else return false;
     }
 
+    function detectMistake5(object) {
+
+        findTextLocation5(object);
+        findTextSizeMistake5(object);
+        findInputSizeMistake5(object);
+    }
+  
+    function findTextLocation5(object) {
+
+        if (object.children && object.children.length >= 2) {
+
+            if (object.children[0].value && 
+                object.children[0].value.value && object.children[0].value.value == 'text') {
+        
+                mistake5Data.location = {
+                    start: {
+                        "line": object.loc.start.line, 
+                        "column": object.loc.start.column
+                    },
+                    end: {
+                        "line": object.loc.end.line, 
+                        "column": object.loc.end.column
+                    }
+                };
+            }
+        }
+    }
+
+    function findTextSizeMistake5(object) {
+        if (object.value && object.value == 'header') {
+            //console.log(object);
+            mistake5Data.isHeader = true;
+            mistake5Data.isTextModFound = false;
+        }
+        else if (object.value && object.value == 'text' && mistake5Data.isHeader && !mistake5Data.isTextModFound) {
+            //console.log(object);
+            mistake5Data.isText = true;
+        }
+        else if (object.key && 
+            object.key.value && object.key.value == 'size' && 
+            object.value && object.value.value && mistake5Data.isText) {
+                //console.log(object.value);
+                mistake5Data.textSize = object.value.value;
+                mistake5Data.isHeader = false;
+                mistake5Data.isText = false;
+                mistake5Data.isTextModFound = true;
+                //console.log(mistake1Data);
+        }
+    }
+
+    function findInputSizeMistake5(object) {
+        if (object.value && object.value == 'input') {
+            //console.log(object);
+            mistake5Data.isInput = true;
+            mistake5Data.isInputModFound = false;
+        }
+        else if (object.key && 
+            object.key.value && object.key.value == 'size' && 
+            object.value && object.value.value && mistake5Data.isInput) {
+                //console.log(object.value);
+                mistake5Data.inputSize = object.value.value;
+                mistake5Data.isInput = false;
+                mistake5Data.isInputModFound = true;
+                //console.log(mistake1Data);
+        }
+    }
+
+    function checkMistake5(position) {
+        if (isMistake5Exist()) {
+            //console.log('MISTAKES');
+            mistake5Data.isMistake = true;
+
+            resultMistakes.push(
+                {"code": listOfMistakesForm[4]["code"],
+                 "error": listOfMistakesForm[4]["error"],
+                 "location": mistake5Data.location
+                }
+            );
+        }
+    }
+
+    function isMistake5Exist() {
+
+        if (mistake5Data.inputSize != '' && mistake5Data.textSize != '') {
+            let inputSize = listOfSizes[mistake5Data.inputSize];
+            let textSize = listOfSizes[mistake5Data.textSize];
+
+            if (inputSize != undefined && textSize != undefined && 
+                ((textSize - inputSize) == 2)) {
+                    return false;
+            }
+            else return true;
+        }
+        else return false;
+    }
 
 
 
