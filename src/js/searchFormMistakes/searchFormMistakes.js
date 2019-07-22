@@ -85,6 +85,19 @@ export default function(positionOfForms) {
         location: null
     };
 
+    const mistake7Data = {
+        isElemHeader: false,
+        isInput: false,
+        isInputModFound: false,
+        isMix: false,
+        isElemItem: false,
+        isFormSpaceH: false,
+        isMistake: false,
+        inputSize: '',
+        formSpaceSize: '',
+        location: null
+    };
+
     function resetmistake1Data() {
         mistake1Data.isLabel = false;
         mistake1Data.isText = false;
@@ -163,15 +176,28 @@ export default function(positionOfForms) {
         mistake6Data.location = null;
     }
 
+    function resetmistake7Data() {
+        mistake7Data.isElemHeader = false;
+        mistake7Data.isInput = false;
+        mistake7Data.isInputModFound = false;
+        mistake7Data.isMix = false;
+        mistake7Data.isElemItem = false;
+        mistake7Data.isFormSpaceH = false;
+        mistake7Data.isMistake = false;
+        mistake7Data.inputSize = '';
+        mistake7Data.formSpaceSize = '';
+        mistake7Data.location = null;
+    }
+
 
     function runValidation() {
         let position = -1;
         positionOfForms.forEach(form => {
             position++;
-            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            console.log(`position = ${position}`);
-            console.log(form);
+            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            // console.log(`position = ${position}`);
+            // console.log(form);
             inspectForm(form);
 
             if (hasFormContent(form)) {
@@ -203,6 +229,7 @@ export default function(positionOfForms) {
             checkMistake4(position);
             checkMistake5(position);
             checkMistake6(position);
+            checkMistake7(position);
 
 
 
@@ -212,6 +239,7 @@ export default function(positionOfForms) {
             resetmistake4Data();
             resetmistake5Data();
             resetmistake6Data();
+            resetmistake7Data();
         })
 
         //console.log(resultMistakes);
@@ -238,6 +266,7 @@ export default function(positionOfForms) {
                 detectMistake4(object[key]);
                 detectMistake5(object[key]);
                 detectMistake6(object[key]);
+                detectMistake7(object[key]);
 
 
                 inspectForm(object[key]);
@@ -812,7 +841,6 @@ export default function(positionOfForms) {
         }
     }
 
-
     function findSpaceVSizeMistake6(object) {
         if (object.key && 
             object.key.value && object.key.value == 'space-v' && 
@@ -840,10 +868,6 @@ export default function(positionOfForms) {
 
     function isMistake6Exist() {
 
-        console.log(`[isMistake6Exist]`);
-        console.log(`listOfSizes[mistake6Data.inputSize] = ${listOfSizes[mistake6Data.inputSize]}`);
-        console.log(`listOfSizes[mistake6Data.formSpaceSize] = ${listOfSizes[mistake6Data.formSpaceSize]}`);
-
         if (mistake6Data.inputSize != '' && mistake6Data.formSpaceSize != '') {
             let inputSize = listOfSizes[mistake6Data.inputSize];
             let formSpaceSize = listOfSizes[mistake6Data.formSpaceSize];
@@ -857,7 +881,111 @@ export default function(positionOfForms) {
         else return false;
     }
 
+    function detectMistake7(object) {
 
+        findHeaderLocation7(object);
+
+        if (isElementPresent(object, 'header')) {
+            mistake7Data.isElemHeader = true;
+        }
+        if (isElementPresent(object, 'item')) {
+            mistake7Data.isElemItem = true;
+        }
+        
+        findInputSizeMistake7(object);
+
+        if (mistake7Data.isElemHeader && isMix(object, mistake7Data) && mistake7Data.isElemItem) {
+            findSpaceHSizeMistake7(object);
+        }
+
+    }
+
+    function findHeaderLocation7(object) {
+
+        if (object.children && object.children.length >= 3) {
+
+            if (object.children[0].value && 
+                object.children[0].value.value && object.children[0].value.value == 'form' && 
+                object.children[1].key && 
+                object.children[1].key.value && object.children[1].key.value == 'elem' && 
+                object.children[1].value && 
+                object.children[1].value.value && object.children[1].value.value == 'header') {
+        
+                mistake7Data.location = {
+                    start: {
+                        "line": object.loc.start.line, 
+                        "column": object.loc.start.column
+                    },
+                    end: {
+                        "line": object.loc.end.line, 
+                        "column": object.loc.end.column
+                    }
+                };
+            }
+        }
+    }
+
+    function findInputSizeMistake7(object) {
+        if (object.value && object.value == 'input') {
+            //console.log(object);
+            mistake7Data.isInput = true;
+            mistake7Data.isInputModFound = false;
+        }
+        else if (object.key && 
+            object.key.value && object.key.value == 'size' && 
+            object.value && object.value.value && mistake7Data.isInput) {
+                //console.log(object.value);
+                mistake7Data.inputSize = object.value.value;
+                mistake7Data.isInput = false;
+                mistake7Data.isInputModFound = true;
+                // console.log('[findInputSizeMistake2] value');
+                // console.log(mistake2Data.inputSize);
+        }
+    }
+
+    function findSpaceHSizeMistake7(object) {
+        if (object.key && 
+            object.key.value && object.key.value == 'space-h' && 
+            object.value && object.value.value) {
+                //console.log(object.value);
+                mistake7Data.formSpaceSize = object.value.value;
+                mistake7Data.isMix = false;
+                mistake7Data.isFormSpaceH = true;
+                mistake7Data.isElemItem = false;
+        }
+    }
+
+    function checkMistake7(position) {
+        if (isMistake7Exist()) {
+            mistake7Data.isMistake = true;
+
+            resultMistakes.push(
+                {"code": listOfMistakesForm[6]["code"],
+                 "error": listOfMistakesForm[6]["error"],
+                 "location": mistake7Data.location
+                }
+            );
+        }
+    }
+
+    function isMistake7Exist() {
+
+        // console.log(`[isMistake7Exist]`);
+        // console.log(`listOfSizes[mistake7Data.inputSize] = ${listOfSizes[mistake7Data.inputSize]}`);
+        // console.log(`listOfSizes[mistake7Data.formSpaceSize] = ${listOfSizes[mistake7Data.formSpaceSize]}`);
+
+        if (mistake7Data.inputSize != '' && mistake7Data.formSpaceSize != '') {
+            let inputSize = listOfSizes[mistake7Data.inputSize];
+            let formSpaceSize = listOfSizes[mistake7Data.formSpaceSize];
+
+            if (inputSize != undefined && formSpaceSize != undefined && 
+                ((formSpaceSize - inputSize) == 1)) {
+                    return false;
+            }
+            else return true;
+        }
+        else return false;
+    }
 
 
 
