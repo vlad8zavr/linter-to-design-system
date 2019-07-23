@@ -271,23 +271,23 @@ export default function(positionOfForms) {
         let position = -1;
         positionOfForms.forEach(form => {
             position++;
-            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            console.log(`position = ${position}`);
-            console.log(form);
+            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            // console.log(`position = ${position}`);
+            // console.log(form);
             inspectForm(form);
 
             if (hasFormContent(form)) {
-                mistake2Data.contentLocation = {
-                    start: {
-                        "line": form.children[1].value.loc.start.line , 
-                        "column": form.children[1].value.loc.start.column
-                    },
-                    end: {
-                        "line": form.children[1].value.loc.end.line, 
-                        "column": form.children[1].value.loc.end.column
-                    }
-                };
+                // mistake2Data.contentLocation = {
+                //     start: {
+                //         "line": form.children[1].value.loc.start.line , 
+                //         "column": form.children[1].value.loc.start.column
+                //     },
+                //     end: {
+                //         "line": form.children[1].value.loc.end.line, 
+                //         "column": form.children[1].value.loc.end.column
+                //     }
+                // };
                 // mistake3Data.contentLocation = {
                 //     start: {
                 //         "line": form.children[1].value.loc.start.line, 
@@ -301,8 +301,8 @@ export default function(positionOfForms) {
             }
 
             //checkMistake1(position);
-            //checkMistake2(position);
-            checkMistake3(position);
+            checkMistake2(position);
+            //checkMistake3(position);
             // checkMistake4(position);
             // checkMistake5(position);
             // checkMistake6(position);
@@ -478,6 +478,8 @@ export default function(positionOfForms) {
 
     function detectMistake2(object) {
 
+        findContentLocation(object, mistake2Data);
+
         if (isElementPresent(object, 'content')) {
             mistake2Data.isElemContent = true;
         }
@@ -593,8 +595,7 @@ export default function(positionOfForms) {
 
     function detectMistake3(object) {
 
-        // finds only the last location
-        findContentLocation(object);
+        findContentLocation(object, mistake3Data);
 
         if (isElementPresent(object, 'content')) {
             mistake3Data.isElemContent = true;
@@ -613,14 +614,14 @@ export default function(positionOfForms) {
 
     }
 
-    function findContentLocation(object) {
+    function findContentLocation(object, mistakeInfo) {
         if (object.children && object.children.length >= 3 && 
             object.children[0].value && 
             object.children[0].value.value && object.children[0].value.value == 'form' && 
             object.children[1].value &&  
             object.children[1].value.value && object.children[1].value.value == 'content') {
 
-                mistake3Data.contentLocation = {
+                mistakeInfo.contentLocation = {
                 start: {
                     "line": object.loc.start.line, 
                     "column": object.loc.start.column
