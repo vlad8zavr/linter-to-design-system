@@ -280,28 +280,28 @@ export default function(positionOfForms) {
             if (hasFormContent(form)) {
                 mistake2Data.contentLocation = {
                     start: {
-                        "line": form.children[1].loc.start.line, 
-                        "column": form.children[1].loc.start.column
+                        "line": form.children[1].value.loc.start.line , 
+                        "column": form.children[1].value.loc.start.column
                     },
                     end: {
-                        "line": form.children[1].loc.end.line, 
-                        "column": form.children[1].loc.end.column
+                        "line": form.children[1].value.loc.end.line, 
+                        "column": form.children[1].value.loc.end.column
                     }
                 };
                 mistake3Data.contentLocation = {
                     start: {
-                        "line": form.children[1].loc.start.line, 
-                        "column": form.children[1].loc.start.column
+                        "line": form.children[1].value.loc.start.line, 
+                        "column": form.children[1].value.loc.start.column
                     },
                     end: {
-                        "line": form.children[1].loc.end.line, 
-                        "column": form.children[1].loc.end.column
+                        "line": form.children[1].value.loc.end.line, 
+                        "column": form.children[1].value.loc.end.column
                     }
                 };    
             }
 
-            checkMistake1(position);
-            // checkMistake2(position);
+            //checkMistake1(position);
+            checkMistake2(position);
             // checkMistake3(position);
             // checkMistake4(position);
             // checkMistake5(position);
