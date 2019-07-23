@@ -271,10 +271,10 @@ export default function(positionOfForms) {
         let position = -1;
         positionOfForms.forEach(form => {
             position++;
-            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            // console.log(`position = ${position}`);
-            // console.log(form);
+            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            console.log(`position = ${position}`);
+            console.log(form);
             inspectForm(form);
 
             if (hasFormContent(form)) {
@@ -288,21 +288,21 @@ export default function(positionOfForms) {
                         "column": form.children[1].value.loc.end.column
                     }
                 };
-                mistake3Data.contentLocation = {
-                    start: {
-                        "line": form.children[1].value.loc.start.line, 
-                        "column": form.children[1].value.loc.start.column
-                    },
-                    end: {
-                        "line": form.children[1].value.loc.end.line, 
-                        "column": form.children[1].value.loc.end.column
-                    }
-                };    
+                // mistake3Data.contentLocation = {
+                //     start: {
+                //         "line": form.children[1].value.loc.start.line, 
+                //         "column": form.children[1].value.loc.start.column
+                //     },
+                //     end: {
+                //         "line": form.children[1].value.loc.end.line, 
+                //         "column": form.children[1].value.loc.end.column
+                //     }
+                // };    
             }
 
             //checkMistake1(position);
-            checkMistake2(position);
-            // checkMistake3(position);
+            //checkMistake2(position);
+            checkMistake3(position);
             // checkMistake4(position);
             // checkMistake5(position);
             // checkMistake6(position);
@@ -593,6 +593,9 @@ export default function(positionOfForms) {
 
     function detectMistake3(object) {
 
+        // finds only the last location
+        findContentLocation(object);
+
         if (isElementPresent(object, 'content')) {
             mistake3Data.isElemContent = true;
         }
@@ -600,7 +603,6 @@ export default function(positionOfForms) {
             mistake3Data.isElemItem = true;
         }
         
-
         if (mistake3Data.isElemContent) {
             findInputSizeMistake3(object);
         }
@@ -610,6 +612,28 @@ export default function(positionOfForms) {
         }
 
     }
+
+    function findContentLocation(object) {
+        if (object.children && object.children.length >= 3 && 
+            object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'form' && 
+            object.children[1].value &&  
+            object.children[1].value.value && object.children[1].value.value == 'content') {
+
+                mistake3Data.contentLocation = {
+                start: {
+                    "line": object.loc.start.line, 
+                    "column": object.loc.start.column
+                },
+                end: {
+                    "line": object.loc.end.line, 
+                    "column": object.loc.end.column
+                }
+            };
+
+        }
+    }
+
 
     function findInputSizeMistake3(object) {
         if (object.value && object.value == 'input') {

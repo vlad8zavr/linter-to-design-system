@@ -69,37 +69,7 @@ export default
                                 "vertical-align": "center",
                                 "distribute": "center",
                                 "space-a": "l"
-                            },
-                            "content":
-                            [
-                                {
-                                    "block": "text",
-                                    "mods":
-                                    {
-                                        "type": "h2",
-                                        "view": "primary",
-                                        "size": "s"
-                                    }
-                                },
-                                {
-                                    "block": "text",
-                                    "mods":
-                                    {
-                                        "type": "p",
-                                        "view": "secondary",
-                                        "size": "s"
-                                    },
-                                    "content":
-                                    {
-                                        "block": "text",
-                                        "elem": "word",
-                                        "elemMods":
-                                        {
-                                            "width": "s"
-                                        }
-                                    }
-                                }
-                            ]
+                            }
                         }
                     }
                 },
@@ -112,13 +82,25 @@ export default
                     },
                     "content":
                     [
+						{
+                            "block": "text",
+                            "mods": { "type": "h3" }
+                        },
+						{
+                            "block": "text",
+                            "mods": { "view": "secondary", "type": "h2" }
+                        },
                         {
                             "block": "text",
-                            "mods": { "type": "h1" }
+                            "mods": { "view": "secondary", "type": "h1" }
                         },
                         {
                             "block": "text",
                             "mods": { "type": "h2" }
+                        },
+						{
+                            "block": "text",
+                            "mods": { "type": "h1" }
                         },
                         {
                             "block": "text",
@@ -189,12 +171,20 @@ export default
                         },
                         {
                             "block": "form",
-                            "content": {
-                                "block": "form",
-                                "elem": "content",
-                                "content": { "block": "input", "mods": { "size": "l" } },
-                                "mix": [{ "block": "form", "elem": "item", "elemMods": {  "space-h": "xxl" } }]
-                            }
+                            "content": [
+                                {
+                                    "block": "form",
+                                    "elem": "header",
+                                    "content": { "block": "input", "mods": { "size": "l" } },
+                                    "mix": [{ "block": "form", "elem": "item", "elemMods": {  "space-v": "xxl" } }]
+                                },
+                                {
+                                    "block": "form",
+                                    "elem": "content",
+                                    "content": { "block": "input", "mods": { "size": "l" } },
+                                    "mix": [{ "block": "form", "elem": "item", "elemMods": {  "space-h": "xxl" } }]
+                                }
+                            ]
                         },
                         {
                             "block": "form",
