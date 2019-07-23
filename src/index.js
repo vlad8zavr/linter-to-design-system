@@ -2,6 +2,7 @@
 import bem from './js/bemdata';
 import searchAllForms from './js/searchAllForms';
 import searchFormMistakes from './js/searchFormMistakes/searchFormMistakes';
+import searchTextMistakes from './js/searchTextMistakes/searchTextMistakes';
 
 //export default function(bem) {
 
@@ -11,7 +12,10 @@ function linter(bem) {
         const positionOfForms = searchAllForms(bem);
         //console.log(positionOfForms);
 
-        const resultMistakes = searchFormMistakes(positionOfForms);
+        let resultMistakes = searchFormMistakes(positionOfForms);
+
+        resultMistakes = searchTextMistakes(bem, resultMistakes);
+
         //console.log(resultMistakes);
         return resultMistakes;
     }

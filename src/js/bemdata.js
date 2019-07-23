@@ -113,6 +113,18 @@ export default
                     "content":
                     [
                         {
+                            "block": "text",
+                            "mods": { "type": "h1" }
+                        },
+                        {
+                            "block": "text",
+                            "mods": { "type": "h2" }
+                        },
+                        {
+                            "block": "text",
+                            "mods": { "type": "h3" }
+                        },
+                        {
                             "block": "form",
                             "content": [
                                 {

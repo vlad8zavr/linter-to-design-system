@@ -1376,11 +1376,6 @@ export default function(positionOfForms) {
     }
 
 
-
-
-
-
-
     runValidation();
     return resultMistakes;
 }
