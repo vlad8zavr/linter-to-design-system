@@ -301,9 +301,9 @@ export default function(positionOfForms) {
             }
 
             //checkMistake1(position);
-            checkMistake2(position);
+            //checkMistake2(position);
             //checkMistake3(position);
-            // checkMistake4(position);
+            checkMistake4(position);
             // checkMistake5(position);
             // checkMistake6(position);
             // checkMistake7(position);
