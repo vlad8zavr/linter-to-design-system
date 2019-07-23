@@ -24,6 +24,12 @@ export default function(bem, resultMistakes) {
 
             if (isObject(object[key])) {
 
+                // обнуление последнего значения h2
+                // если 
+                /*текущий start.column > предыдущего start.column
+                    и
+                  текущий start.column <= последний h2 start.column
+                */
                 
                 findTextHeader(object[key]);
 
