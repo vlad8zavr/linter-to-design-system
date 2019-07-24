@@ -207,7 +207,13 @@ export default
                                         {
                                             "block": "text",
                                             "mods": {
-                                                "size": "xl"
+                                                "size": "xxl"
+                                            }
+                                        },
+                                        {
+                                            "block": "text",
+                                            "mods": {
+                                                "size": "l"
                                             }
                                         }
                                     ]
@@ -216,6 +222,12 @@ export default
                                     "block": "input",
                                     "mods": {
                                         "size": "l"
+                                    }
+                                },
+                                {
+                                    "block": "text",
+                                    "mods": {
+                                        "size": "s"
                                     }
                                 }
                             ]

@@ -59,6 +59,8 @@ export default function(positionOfForms) {
         formIndentSize: '',
         contentLocation: null
     };
+    let mistake5TextSizes = [];
+    let mistake5HeaderLocation = null;
 
     const mistake5Data = {
         isHeader: false,
@@ -200,6 +202,8 @@ export default function(positionOfForms) {
         mistake5Data.textSize = '';
         mistake5Data.inputSize = '';
         mistake5Data.location = null;
+        mistake5TextSizes = [];
+        mistake5HeaderLocation = null;
     }
 
     function resetmistake6Data() {
@@ -281,8 +285,10 @@ export default function(positionOfForms) {
             // checkMistake1(position);
             // checkMistake2();
             // checkMistake3();
-            checkMistake4();
-            // checkMistake5();
+            //checkMistake4();
+            
+            checkMistake5();
+
             // checkMistake6();
             // checkMistake7();
             // checkMistake8();
@@ -652,22 +658,22 @@ export default function(positionOfForms) {
 
     function detectMistake4(object) {
 
-        findContentItemLocation(object);
-        if (isElementPresent(object, 'content-item')) {
-            mistake4Data.isElemContent = true;
-        }
-        if (isElementPresent(object, 'item')) {
-            mistake4Data.isElemItem = true;
-        }
+        // findContentItemLocation(object);
+        // if (isElementPresent(object, 'content-item')) {
+        //     mistake4Data.isElemContent = true;
+        // }
+        // if (isElementPresent(object, 'item')) {
+        //     mistake4Data.isElemItem = true;
+        // }
         
 
-        if (mistake4Data.isElemContent) {
-            findInputSizeMistake4(object);
-        }
+        // if (mistake4Data.isElemContent) {
+        //     findInputSizeMistake4(object);
+        // }
 
-        if (isMix(object, mistake4Data) && mistake4Data.isElemItem) {
-            findIndentBSizeMistake4(object);
-        }
+        // if (isMix(object, mistake4Data) && mistake4Data.isElemItem) {
+        //     findIndentBSizeMistake4(object);
+        // }
 
     }
 
@@ -785,19 +791,32 @@ export default function(positionOfForms) {
 
     function detectMistake5(object) {
 
-        findTextLocation5(object);
-        findTextSizeMistake5(object);
+        findHeaderLocation5(object);
+
+        if (isElementPresent(object, 'header')) {
+            mistake5Data.isHeader = true;
+        }
+        
+        if (mistake5Data.isHeader) {
+            findTextLocation5(object);
+            findTextSizeMistake5(object);
+        }  
+        
         findInputSizeMistake5(object);
     }
-  
-    function findTextLocation5(object) {
 
-        if (object.children && object.children.length >= 2) {
+    function findHeaderLocation5(object) {
+        if (object.children && object.children.length >= 3) {
 
             if (object.children[0].value && 
-                object.children[0].value.value && object.children[0].value.value == 'text') {
+                object.children[0].value.value && object.children[0].value.value == 'form' && 
+                object.children[1].key && 
+                object.children[1].key.value && object.children[1].key.value == 'elem' && 
+                object.children[1].value && 
+                object.children[1].value.value && object.children[1].value.value == 'header') {
+                    
         
-                mistake5Data.location = {
+                mistake5HeaderLocation = {
                     start: {
                         "line": object.loc.start.line, 
                         "column": object.loc.start.column
@@ -810,26 +829,90 @@ export default function(positionOfForms) {
             }
         }
     }
+  
+    function findTextLocation5(object) {
+
+        if (object.children && object.children.length >= 2) {
+
+
+            if (object.children[0].value && 
+                object.children[0].value.value && object.children[0].value.value == 'text') {
+        
+                // console.log('[findTextLocation5]');
+                // console.log(`mistake5Data.isHeader = ${mistake5Data.isHeader}`);
+
+                //mistake5Data.isHeader = false;
+                mistake5Data.isText = false;
+                mistake5Data.isTextModFound = false;
+                mistake5Data.isMistake = false;
+                mistake5Data.textSize = '';
+                mistake5Data.location = null;
+                // resetmistake5Data();
+
+                if (mistake5HeaderLocation && mistake5HeaderLocation.end.line > object.loc.start.line || 
+                    mistake5HeaderLocation == null) {
+
+                    mistake5Data.location = {
+                        start: {
+                            "line": object.loc.start.line, 
+                            "column": object.loc.start.column
+                        },
+                        end: {
+                            "line": object.loc.end.line, 
+                            "column": object.loc.end.column
+                        }
+                    };
+                }
+
+                // mistake5Data.location = {
+                //     start: {
+                //         "line": object.loc.start.line, 
+                //         "column": object.loc.start.column
+                //     },
+                //     end: {
+                //         "line": object.loc.end.line, 
+                //         "column": object.loc.end.column
+                //     }
+                // };
+            }
+        }
+    }
 
     function findTextSizeMistake5(object) {
-        if (object.value && object.value == 'header') {
-            //console.log(object);
-            mistake5Data.isHeader = true;
-            mistake5Data.isTextModFound = false;
-        }
-        else if (object.value && object.value == 'text' && mistake5Data.isHeader && !mistake5Data.isTextModFound) {
+        // if (object.value && object.value == 'header') {
+        //     //console.log(object);
+        //     mistake5Data.isHeader = true;
+        //     mistake5Data.isTextModFound = false;
+        // }
+        if (object.value && object.value == 'text' && mistake5Data.isHeader && !mistake5Data.isTextModFound && 
+            object.loc.start.line < mistake5HeaderLocation.end.line) {
             //console.log(object);
             mistake5Data.isText = true;
+            // console.log('[findTextSizeMistake5]');
+            // console.log('object.loc');
+            // console.log(object.loc);
+            // console.log('mistake5HeaderLocation');
+            // console.log(mistake5HeaderLocation);
+            // console.log('------------------------------------');
         }
         else if (object.key && 
             object.key.value && object.key.value == 'size' && 
             object.value && object.value.value && mistake5Data.isText) {
                 //console.log(object.value);
                 mistake5Data.textSize = object.value.value;
-                mistake5Data.isHeader = false;
+                //mistake5Data.isHeader = false;
                 mistake5Data.isText = false;
                 mistake5Data.isTextModFound = true;
                 //console.log(mistake1Data);
+
+                mistake5TextSizes.push({
+                    size: mistake5Data.textSize,
+                    location: mistake5Data.location
+                });
+                // console.log('[findTextSizeMistake5]');
+                // console.log('mistake5TextSizes');
+                // console.log(mistake5TextSizes);
+                // console.log('------------------------------------');
         }
     }
 
@@ -851,24 +934,38 @@ export default function(positionOfForms) {
     }
 
     function checkMistake5() {
-        if (isMistake5Exist()) {
-            //console.log('MISTAKES');
-            mistake5Data.isMistake = true;
 
-            resultMistakes.push(
-                {"code": listOfMistakesForm[4]["code"],
-                 "error": listOfMistakesForm[4]["error"],
-                 "location": mistake5Data.location
-                }
-            );
-        }
+        mistake5TextSizes.forEach(item => {
+            if (isMistake5Exist(item.size)) {
+                mistake5Data.isMistake = true;
+
+                resultMistakes.push(
+                    {"code": listOfMistakesForm[4]["code"],
+                     "error": listOfMistakesForm[4]["error"],
+                     "location": item.location
+                    }
+                );
+            }
+        });
+
+        // if (isMistake5Exist()) {
+        //     //console.log('MISTAKES');
+        //     mistake5Data.isMistake = true;
+
+        //     resultMistakes.push(
+        //         {"code": listOfMistakesForm[4]["code"],
+        //          "error": listOfMistakesForm[4]["error"],
+        //          "location": mistake5Data.location
+        //         }
+        //     );
+        // }
     }
 
-    function isMistake5Exist() {
+    function isMistake5Exist(textValue) {
 
-        if (mistake5Data.inputSize != '' && mistake5Data.textSize != '') {
+        if (mistake5Data.inputSize != '') {
             let inputSize = listOfSizes[mistake5Data.inputSize];
-            let textSize = listOfSizes[mistake5Data.textSize];
+            let textSize = listOfSizes[textValue];
 
             if (inputSize != undefined && textSize != undefined && 
                 ((textSize - inputSize) == 2)) {
@@ -877,6 +974,18 @@ export default function(positionOfForms) {
             else return true;
         }
         else return false;
+
+        // if (mistake5Data.inputSize != '' && mistake5Data.textSize != '') {
+        //     let inputSize = listOfSizes[mistake5Data.inputSize];
+        //     let textSize = listOfSizes[mistake5Data.textSize];
+
+        //     if (inputSize != undefined && textSize != undefined && 
+        //         ((textSize - inputSize) == 2)) {
+        //             return false;
+        //     }
+        //     else return true;
+        // }
+        // else return false;
     }
 
     function detectMistake6(object) {
