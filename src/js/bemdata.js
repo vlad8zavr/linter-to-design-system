@@ -165,6 +165,17 @@ export default
                                         "elem":  "content-item",
                                         "mix": [{ "block": "form", "elem": "item", "elemMods": { "indent-b": "l" } }],
                                         "content": { "block": "input", "mods": { "size": "l" } }
+                                    },
+                                    {
+                                        "block": "form",
+                                        "elem":  "content-item",
+                                        "content": { "block": "input", "mods": { "size": "l" } }
+                                    },
+                                    {
+                                        "block": "form",
+                                        "elem":  "content-item",
+                                        "mix": [{ "block": "form", "elem": "item", "elemMods": { "indent-b": "xl" } }],
+                                        "content": { "block": "input", "mods": { "size": "l" } }
                                     }
                                 ]
                             }
