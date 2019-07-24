@@ -282,18 +282,16 @@ export default function(positionOfForms) {
             inspectForm(form);
 
 
-            // checkMistake1(position);
-            // checkMistake2();
-            // checkMistake3();
-            //checkMistake4();
-            
+            checkMistake1(position);
+            checkMistake2();
+            checkMistake3();
+            checkMistake4();
             checkMistake5();
-
-            // checkMistake6();
-            // checkMistake7();
-            // checkMistake8();
-            // checkMistake9();
-            // checkMistake10();
+            checkMistake6();
+            checkMistake7();
+            checkMistake8();
+            checkMistake9();
+            checkMistake10();
 
 
             resetmistake1Data();
@@ -658,22 +656,22 @@ export default function(positionOfForms) {
 
     function detectMistake4(object) {
 
-        // findContentItemLocation(object);
-        // if (isElementPresent(object, 'content-item')) {
-        //     mistake4Data.isElemContent = true;
-        // }
-        // if (isElementPresent(object, 'item')) {
-        //     mistake4Data.isElemItem = true;
-        // }
+        findContentItemLocation(object);
+        if (isElementPresent(object, 'content-item')) {
+            mistake4Data.isElemContent = true;
+        }
+        if (isElementPresent(object, 'item')) {
+            mistake4Data.isElemItem = true;
+        }
         
 
-        // if (mistake4Data.isElemContent) {
-        //     findInputSizeMistake4(object);
-        // }
+        if (mistake4Data.isElemContent) {
+            findInputSizeMistake4(object);
+        }
 
-        // if (isMix(object, mistake4Data) && mistake4Data.isElemItem) {
-        //     findIndentBSizeMistake4(object);
-        // }
+        if (isMix(object, mistake4Data) && mistake4Data.isElemItem) {
+            findIndentBSizeMistake4(object);
+        }
 
     }
 
