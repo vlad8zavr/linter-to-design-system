@@ -308,8 +308,8 @@ export default function(positionOfForms) {
             //checkMistake6(position);
             //checkMistake7(position);
             //checkMistake8(position);
-            checkMistake9(position);
-            // checkMistake10(position);
+            //checkMistake9(position);
+            checkMistake10(position);
 
 
             resetmistake1Data();
