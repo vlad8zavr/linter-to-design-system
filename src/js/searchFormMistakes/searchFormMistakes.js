@@ -282,18 +282,18 @@ export default function(positionOfForms) {
             inspectForm(form);
 
 
-            // checkMistake1(position);
-            // checkMistake2();
-            // checkMistake3();
-            
+            checkMistake1(position);
+            checkMistake2();
+            checkMistake3();
+        
             checkMistake4();
             
-            // checkMistake5();
-            // checkMistake6();
-            // checkMistake7();
-            // checkMistake8();
-            // checkMistake9();
-            // checkMistake10();
+            checkMistake5();
+            checkMistake6();
+            checkMistake7();
+            checkMistake8();
+            checkMistake9();
+            checkMistake10();
 
 
             resetmistake1Data();
