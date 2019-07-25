@@ -436,6 +436,7 @@ export default function(positionOfForms) {
         let textButton = false;
         let inputButton = false;
         let textInputButton = false;
+
         if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize == '' &&
             mistake1Data.textSize != mistake1Data.inputSize) {
                 textInput = true;
@@ -444,17 +445,25 @@ export default function(positionOfForms) {
             mistake1Data.textSize != mistake1Data.buttonSize) {
                 textButton = true;
         }
-        if (mistake1Data.inputSize != '' && mistake1Data.buttonSize != '' && mistake1Data.textSize == '' &&
-            mistake1Data.inputSize != mistake1Data.buttonSize) {
-                inputButton = true;
-        }
+        // if (mistake1Data.inputSize != '' && mistake1Data.buttonSize != '' && mistake1Data.textSize == '' &&
+        //     mistake1Data.inputSize != mistake1Data.buttonSize) {
+        //         inputButton = true;
+        // }
+        // if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize != '' && 
+        //     (mistake1Data.textSize != mistake1Data.inputSize || 
+        //      mistake1Data.textSize != mistake1Data.buttonSize || 
+        //      mistake1Data.inputSize != mistake1Data.buttonSize)) {
+        //         textInputButton = true;
+        // }
         if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize != '' && 
             (mistake1Data.textSize != mistake1Data.inputSize || 
-            mistake1Data.textSize != mistake1Data.buttonSize || 
-            mistake1Data.inputSize != mistake1Data.buttonSize)) {
+             mistake1Data.textSize != mistake1Data.buttonSize)) {
                 textInputButton = true;
         }
-        if (textInput || textButton || inputButton || textInputButton) {
+        // if (textInput || textButton || inputButton || textInputButton) {
+        //     return true;
+        // }
+        if (textInput || textButton || textInputButton) {
             return true;
         }
         else return false;
