@@ -434,7 +434,6 @@ export default function(positionOfForms) {
 
         let textInput = false;
         let textButton = false;
-        let inputButton = false;
         let textInputButton = false;
 
         if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize == '' &&
@@ -445,24 +444,11 @@ export default function(positionOfForms) {
             mistake1Data.textSize != mistake1Data.buttonSize) {
                 textButton = true;
         }
-        // if (mistake1Data.inputSize != '' && mistake1Data.buttonSize != '' && mistake1Data.textSize == '' &&
-        //     mistake1Data.inputSize != mistake1Data.buttonSize) {
-        //         inputButton = true;
-        // }
-        // if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize != '' && 
-        //     (mistake1Data.textSize != mistake1Data.inputSize || 
-        //      mistake1Data.textSize != mistake1Data.buttonSize || 
-        //      mistake1Data.inputSize != mistake1Data.buttonSize)) {
-        //         textInputButton = true;
-        // }
         if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize != '' && 
             (mistake1Data.textSize != mistake1Data.inputSize || 
              mistake1Data.textSize != mistake1Data.buttonSize)) {
                 textInputButton = true;
         }
-        // if (textInput || textButton || inputButton || textInputButton) {
-        //     return true;
-        // }
         if (textInput || textButton || textInputButton) {
             return true;
         }
@@ -481,11 +467,17 @@ export default function(positionOfForms) {
         }
         
 
-        if (mistake2Data.isElemContent) {
-            findInputSizeMistake2(object);
-        }
+        // if (mistake2Data.isElemContent) {
+        //     findInputSizeMistake2(object);
+        // }
 
-        if (isMix(object, mistake2Data) && mistake2Data.isElemItem) {
+        // if (isMix(object, mistake2Data) && mistake2Data.isElemItem) {
+        //     findSpaceVSizeMistake2(object);
+        // }
+
+        findInputSizeMistake2(object);
+
+        if (mistake2Data.isElemContent && isMix(object, mistake2Data) && mistake2Data.isElemItem) {
             findSpaceVSizeMistake2(object);
         }
 
