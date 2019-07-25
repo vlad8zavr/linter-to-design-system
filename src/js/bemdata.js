@@ -118,7 +118,15 @@ export default
                                         }
                                 },
                                 { "block": "input", "mods": { "size": "l" } },
-                                { "block": "button", "mods": { "size": "xl" } }
+                                {
+                                    "block": "form",
+                                    "elem": "label",
+                                    "content": {
+                                            "block": "text",
+                                            "mods": { "size": "xl" }
+                                    }
+                                },
+                                { "block": "input", "mods": { "size": "xl" } }
                             ]
                         },
                         {

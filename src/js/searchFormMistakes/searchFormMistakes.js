@@ -20,6 +20,7 @@ export default function(positionOfForms) {
         inputSize: '',
         buttonSize: ''
     };
+    let mistake1Sizes = [];
 
     const mistake2Data = {
         isElemContent: false,
@@ -151,6 +152,7 @@ export default function(positionOfForms) {
         mistake1Data.textSize = '';
         mistake1Data.inputSize = '';
         mistake1Data.buttonSize = '';
+        mistake1Sizes = [];
     }
 
     function resetmistake2Data() {
@@ -368,14 +370,54 @@ export default function(positionOfForms) {
         else if (object.key && 
             object.key.value && object.key.value == 'size' && 
             object.value && object.value.value && mistake1Data.isText) {
-                //console.log(object.value);
+                // console.log('[findTextSizeMistake1]');
+                // console.log(object.value);
                 mistake1Data.textSize = object.value.value;
                 mistake1Data.isLabel = false;
                 mistake1Data.isText = false;
                 mistake1Data.isTextModFound = true;
                 //console.log(mistake1Data);
+
+                mistake1Sizes.push(object.value.value);
+                // console.log('mistake1Sizes');
+                // console.log(mistake1Sizes);
         }
     }
+
+    // function findTextSizeMistake1(object) {
+    //     if (object.children && object.children.length >= 3 && 
+    //         object.children[0].value && 
+    //         object.children[0].value.value && object.children[0].value.value == 'form' && 
+    //         object.children[1].value &&  
+    //         object.children[1].value.value && object.children[1].value.value == 'label' &&
+    //         object.children[2].key && 
+    //         object.children[2].key.value && object.children[1].key.value == 'content') {
+
+    //         const child = object.children[2].value;
+
+    //         if (child && child.children && child.children >= 2 && 
+    //             child.children[0].value && 
+    //             child.children[0].value.value && child.children[0].value.value == 'text' && 
+    //             child.children[1].key && 
+    //             child.children[1].key.value && child.children[1].key.value == 'mods') {
+
+    //             const textMod = child.children[1].value;
+
+    //             if (textMod && textMod.children && textMod.children > 0) {
+
+    //                 textMod.children.forEach(item => {
+
+    //                     if (item.key && item.key.value && item.key.value == 'size' && 
+    //                         item.value && item.value.value) {
+
+    //                         mistake1Data.textSize = item.value.value;
+    //                         mistake1Data.isTextModFound = true;
+    //                     }
+    //                 })
+    //             }
+    //         }
+    //     }
+    // }
 
     function findInputSizeMistake1(object) {
         if (object.value && object.value == 'input') {
@@ -386,11 +428,16 @@ export default function(positionOfForms) {
         else if (object.key && 
             object.key.value && object.key.value == 'size' && 
             object.value && object.value.value && mistake1Data.isInput) {
-                //console.log(object.value);
+                // console.log('[findInputSizeMistake1]');
+                // console.log(object.value);
                 mistake1Data.inputSize = object.value.value;
                 mistake1Data.isInput = false;
                 mistake1Data.isInputModFound = true;
                 //console.log(mistake1Data);
+
+                mistake1Sizes.push(object.value.value);
+                // console.log('mistake1Sizes');
+                // console.log(mistake1Sizes);
         }
     }
 
@@ -408,6 +455,10 @@ export default function(positionOfForms) {
                 mistake1Data.isButton = false;
                 mistake1Data.isButtonModFound = true;
                 //console.log(mistake1Data);
+
+                mistake1Sizes.push(object.value.value);
+                // console.log('mistake1Sizes');
+                // console.log(mistake1Sizes);
         }
     }
 
@@ -432,27 +483,46 @@ export default function(positionOfForms) {
 
     function isMistake1Exist() {
 
-        let textInput = false;
-        let textButton = false;
-        let textInputButton = false;
+        let isError = false;
+        // console.log('[isMistake1Exist]');
+        // console.log(`mistake1Data.textSize != '' && mistake1Sizes && mistake1Sizes.length > 1 : ${mistake1Data.textSize != '' && mistake1Sizes && mistake1Sizes.length > 1}`);
+        // console.log('-------------------------------------------');
+        if (mistake1Data.textSize != '' && mistake1Sizes && mistake1Sizes.length > 1) {
+            
+            //console.log('-------- before cycle --------');
+            for (let i = 0, length = mistake1Sizes.length; i < length - 1; i++) {
+                // console.log(`mistake1Sizes[${i}] = ${mistake1Sizes[i]}`);
+                // console.log(`mistake1Sizes[${i+1}] = ${mistake1Sizes[i+1]}`);
+                // console.log(`mistake1Sizes[${i}] != mistake1Sizes[${i+1}] : ${mistake1Sizes[i] != mistake1Sizes[i + 1]}`);
+                if (mistake1Sizes[i] != mistake1Sizes[i + 1]) {
+                    isError = true;
+                    // console.log(`isError = ${isError}`);
+                }
+            }
+        }
+        return isError;
 
-        if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize == '' &&
-            mistake1Data.textSize != mistake1Data.inputSize) {
-                textInput = true;
-        }
-        if (mistake1Data.textSize != '' && mistake1Data.buttonSize != '' && mistake1Data.inputSize == '' &&
-            mistake1Data.textSize != mistake1Data.buttonSize) {
-                textButton = true;
-        }
-        if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize != '' && 
-            (mistake1Data.textSize != mistake1Data.inputSize || 
-             mistake1Data.textSize != mistake1Data.buttonSize)) {
-                textInputButton = true;
-        }
-        if (textInput || textButton || textInputButton) {
-            return true;
-        }
-        else return false;
+        // let textInput = false;
+        // let textButton = false;
+        // let textInputButton = false;
+
+        // if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize == '' &&
+        //     mistake1Data.textSize != mistake1Data.inputSize) {
+        //         textInput = true;
+        // }
+        // if (mistake1Data.textSize != '' && mistake1Data.buttonSize != '' && mistake1Data.inputSize == '' &&
+        //     mistake1Data.textSize != mistake1Data.buttonSize) {
+        //         textButton = true;
+        // }
+        // if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize != '' && 
+        //     (mistake1Data.textSize != mistake1Data.inputSize || 
+        //      mistake1Data.textSize != mistake1Data.buttonSize)) {
+        //         textInputButton = true;
+        // }
+        // if (textInput || textButton || textInputButton) {
+        //     return true;
+        // }
+        // else return false;
     }
 
     function detectMistake2(object) {
