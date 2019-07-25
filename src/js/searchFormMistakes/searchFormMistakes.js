@@ -282,16 +282,18 @@ export default function(positionOfForms) {
             inspectForm(form);
 
 
-            checkMistake1(position);
-            checkMistake2();
-            checkMistake3();
+            // checkMistake1(position);
+            // checkMistake2();
+            // checkMistake3();
+            
             checkMistake4();
-            checkMistake5();
-            checkMistake6();
-            checkMistake7();
-            checkMistake8();
-            checkMistake9();
-            checkMistake10();
+            
+            // checkMistake5();
+            // checkMistake6();
+            // checkMistake7();
+            // checkMistake8();
+            // checkMistake9();
+            // checkMistake10();
 
 
             resetmistake1Data();
@@ -778,12 +780,12 @@ export default function(positionOfForms) {
             }
             else return true;
         }
-        else if (mistake4Data.inputSize != '' && mistake4Data.formIndentSize == '') {
-            // console.log('[isMistake4Exist]');
-            // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
-            // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
-            return true;
-        }
+        // else if (mistake4Data.inputSize != '' && mistake4Data.formIndentSize == '') {
+        //     // console.log('[isMistake4Exist]');
+        //     // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
+        //     // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
+        //     return true;
+        // }
         else return false;
     }
 
