@@ -6,7 +6,7 @@ import searchTextMistakes from './js/searchTextMistakes/searchTextMistakes';
 
 //export default function(bem) {
 
-function linter(bem) {
+// function linter(bem) {
     
     const lint = (bem) => {
         const positionOfForms = searchAllForms(bem);
@@ -52,6 +52,19 @@ function linter(bem) {
     }
     createGlobalVariable();
     
-}
-linter(bem);
+// }
+//linter(bem);
 
+
+// test issues
+// export const lint = (bem) => {
+//     const positionOfForms = searchAllForms(bem);
+//     //console.log(positionOfForms);
+
+//     let resultMistakes = searchFormMistakes(positionOfForms);
+
+//     resultMistakes = searchTextMistakes(bem, resultMistakes);
+
+//     //console.log(resultMistakes);
+//     return resultMistakes;
+// }
