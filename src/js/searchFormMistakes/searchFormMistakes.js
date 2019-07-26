@@ -284,18 +284,18 @@ export default function(positionOfForms) {
             inspectForm(form);
 
 
-            checkMistake1(position);
+            // checkMistake1(position);
             checkMistake2();
-            checkMistake3();
+            // checkMistake3();
         
-            checkMistake4();
+            //checkMistake4();
             
-            checkMistake5();
-            checkMistake6();
-            checkMistake7();
-            checkMistake8();
-            checkMistake9();
-            checkMistake10();
+            // checkMistake5();
+            // checkMistake6();
+            // checkMistake7();
+            // checkMistake8();
+            // checkMistake9();
+            // checkMistake10();
 
 
             resetmistake1Data();
@@ -461,16 +461,11 @@ export default function(positionOfForms) {
     function isMistake1Exist() {
 
         let isError = false;
-        // console.log('[isMistake1Exist]');
-        // console.log(`mistake1Data.textSize != '' && mistake1Sizes && mistake1Sizes.length > 1 : ${mistake1Data.textSize != '' && mistake1Sizes && mistake1Sizes.length > 1}`);
-        // console.log('-------------------------------------------');
         if (mistake1Sizes && mistake1Sizes.length > 1) {
             
             //console.log('-------- before cycle --------');
             for (let i = 0, length = mistake1Sizes.length; i < length - 1; i++) {
-                // console.log(`mistake1Sizes[${i}] = ${mistake1Sizes[i]}`);
-                // console.log(`mistake1Sizes[${i+1}] = ${mistake1Sizes[i+1]}`);
-                // console.log(`mistake1Sizes[${i}] != mistake1Sizes[${i+1}] : ${mistake1Sizes[i] != mistake1Sizes[i + 1]}`);
+
                 if (mistake1Sizes[i] != mistake1Sizes[i + 1]) {
                     isError = true;
                     // console.log(`isError = ${isError}`);
@@ -478,28 +473,6 @@ export default function(positionOfForms) {
             }
         }
         return isError;
-
-        // let textInput = false;
-        // let textButton = false;
-        // let textInputButton = false;
-
-        // if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize == '' &&
-        //     mistake1Data.textSize != mistake1Data.inputSize) {
-        //         textInput = true;
-        // }
-        // if (mistake1Data.textSize != '' && mistake1Data.buttonSize != '' && mistake1Data.inputSize == '' &&
-        //     mistake1Data.textSize != mistake1Data.buttonSize) {
-        //         textButton = true;
-        // }
-        // if (mistake1Data.textSize != '' && mistake1Data.inputSize != '' && mistake1Data.buttonSize != '' && 
-        //     (mistake1Data.textSize != mistake1Data.inputSize || 
-        //      mistake1Data.textSize != mistake1Data.buttonSize)) {
-        //         textInputButton = true;
-        // }
-        // if (textInput || textButton || textInputButton) {
-        //     return true;
-        // }
-        // else return false;
     }
 
     function detectMistake2(object) {
@@ -592,7 +565,8 @@ export default function(positionOfForms) {
 
     function isMistake2Exist() {
 
-        if (mistake2Data.inputSize != '' && mistake2Data.formSpaceSize != '') {
+        if (mistake2Data.isElemContent && mistake2Data.isElemItem && 
+            mistake2Data.inputSize != '' && mistake2Data.formSpaceSize != '') {
             let inputSize = listOfSizes[mistake2Data.inputSize];
             let formSpaceSize = listOfSizes[mistake2Data.formSpaceSize];
 
@@ -601,6 +575,10 @@ export default function(positionOfForms) {
                     return false;
             }
             else return true;
+        }
+        else if (mistake2Data.isElemContent && mistake2Data.isElemItem && 
+                 mistake2Data.inputSize != '' && mistake2Data.formSpaceSize == '') {
+            return true;
         }
         else return false;
     }
@@ -643,7 +621,6 @@ export default function(positionOfForms) {
                     "column": object.loc.end.column
                 }
             };
-
         }
     }
 
@@ -727,47 +704,47 @@ export default function(positionOfForms) {
 
     function findContentItemLocation(object) {
 
-        if (object.children && object.children.length >= 3 && 
-            object.children[0].value && 
-            object.children[0].value.value && object.children[0].value.value == 'form' && 
-            object.children[1].value &&  
-            object.children[1].value.value && object.children[1].value.value == 'content-item') {
+        // if (object.children && object.children.length >= 3 && 
+        //     object.children[0].value && 
+        //     object.children[0].value.value && object.children[0].value.value == 'form' && 
+        //     object.children[1].value &&  
+        //     object.children[1].value.value && object.children[1].value.value == 'content-item') {
 
-            // console.log('[findContentItemLocation]');
-            // console.log(`start = ${object.loc.start.line}, end = ${object.loc.end.line}`);
-            // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
-            // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
+        //     // console.log('[findContentItemLocation]');
+        //     // console.log(`start = ${object.loc.start.line}, end = ${object.loc.end.line}`);
+        //     // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
+        //     // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
             
-            if (isMistake4Exist()) {
-                mistake4Data.isMistake = true;
+        //     if (isMistake4Exist()) {
+        //         mistake4Data.isMistake = true;
     
-                resultMistakes.push(
-                    {"code": listOfMistakesForm[3]["code"],
-                     "error": listOfMistakesForm[3]["error"],
-                     "location": mistake4Data.contentLocation
-                    }
-                );
-            }
-            resetmistake4Data();
+        //         resultMistakes.push(
+        //             {"code": listOfMistakesForm[3]["code"],
+        //              "error": listOfMistakesForm[3]["error"],
+        //              "location": mistake4Data.contentLocation
+        //             }
+        //         );
+        //     }
+        //     resetmistake4Data();
 
-            // console.log('afterReset');
-            // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
-            // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
-            // console.log('-----------------------------------------');
+        //     // console.log('afterReset');
+        //     // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
+        //     // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
+        //     // console.log('-----------------------------------------');
 
 
-            mistake4Data.contentLocation = {
-                start: {
-                    "line": object.loc.start.line, 
-                    "column": object.loc.start.column
-                },
-                end: {
-                    "line": object.loc.end.line, 
-                    "column": object.loc.end.column
-                }
-            };
+        //     mistake4Data.contentLocation = {
+        //         start: {
+        //             "line": object.loc.start.line, 
+        //             "column": object.loc.start.column
+        //         },
+        //         end: {
+        //             "line": object.loc.end.line, 
+        //             "column": object.loc.end.column
+        //         }
+        //     };
 
-        }
+        // }
     }
 
     function findInputSizeMistake4(object) {
