@@ -284,18 +284,18 @@ export default function(positionOfForms) {
             inspectForm(form);
 
 
-            // checkMistake1(position);
+            checkMistake1(position);
             checkMistake2();
-            // checkMistake3();
+            checkMistake3();
         
-            // checkMistake4();
+            checkMistake4();
             
-            // checkMistake5();
-            // checkMistake6();
-            // checkMistake7();
-            // checkMistake8();
-            // checkMistake9();
-            // checkMistake10();
+            checkMistake5();
+            checkMistake6();
+            checkMistake7();
+            checkMistake8();
+            checkMistake9();
+            checkMistake10();
 
 
             resetmistake1Data();
@@ -644,37 +644,37 @@ export default function(positionOfForms) {
     }
 
     function findContentLocation3(object) {
-        // if (object.children && object.children.length >= 3 && 
-        //     object.children[0].value && 
-        //     object.children[0].value.value && object.children[0].value.value == 'form' && 
-        //     object.children[1].value &&  
-        //     object.children[1].value.value && object.children[1].value.value == 'content') {
+        if (object.children && object.children.length >= 3 && 
+            object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'form' && 
+            object.children[1].value &&  
+            object.children[1].value.value && object.children[1].value.value == 'content') {
 
 
-        //     if (isMistake3Exist()) {
-        //         mistake3Data.isMistake = true;
+            if (isMistake3Exist()) {
+                mistake3Data.isMistake = true;
     
-        //         resultMistakes.push(
-        //             {"code": listOfMistakesForm[2]["code"],
-        //                 "error": listOfMistakesForm[2]["error"],
-        //                 "location": mistake3Data.contentLocation
-        //             }
-        //         );
-        //     }
-        //     resetmistake3Data();
+                resultMistakes.push(
+                    {"code": listOfMistakesForm[2]["code"],
+                        "error": listOfMistakesForm[2]["error"],
+                        "location": mistake3Data.contentLocation
+                    }
+                );
+            }
+            resetmistake3Data();
 
 
-        //     mistake3Data.contentLocation = {
-        //         start: {
-        //             "line": object.loc.start.line, 
-        //             "column": object.loc.start.column
-        //         },
-        //         end: {
-        //             "line": object.loc.end.line, 
-        //             "column": object.loc.end.column
-        //         }
-        //     };
-        // }
+            mistake3Data.contentLocation = {
+                start: {
+                    "line": object.loc.start.line, 
+                    "column": object.loc.start.column
+                },
+                end: {
+                    "line": object.loc.end.line, 
+                    "column": object.loc.end.column
+                }
+            };
+        }
     }
 
     function findInputSizeMistake3(object) {
@@ -757,36 +757,36 @@ export default function(positionOfForms) {
 
     function findContentItemLocation(object) {
 
-        // if (object.children && object.children.length >= 3 && 
-        //     object.children[0].value && 
-        //     object.children[0].value.value && object.children[0].value.value == 'form' && 
-        //     object.children[1].value &&  
-        //     object.children[1].value.value && object.children[1].value.value == 'content-item') {
+        if (object.children && object.children.length >= 3 && 
+            object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'form' && 
+            object.children[1].value &&  
+            object.children[1].value.value && object.children[1].value.value == 'content-item') {
             
-        //     if (isMistake4Exist()) {
-        //         mistake4Data.isMistake = true;
+            if (isMistake4Exist()) {
+                mistake4Data.isMistake = true;
     
-        //         resultMistakes.push(
-        //             {"code": listOfMistakesForm[3]["code"],
-        //              "error": listOfMistakesForm[3]["error"],
-        //              "location": mistake4Data.contentLocation
-        //             }
-        //         );
-        //     }
-        //     resetmistake4Data();
+                resultMistakes.push(
+                    {"code": listOfMistakesForm[3]["code"],
+                     "error": listOfMistakesForm[3]["error"],
+                     "location": mistake4Data.contentLocation
+                    }
+                );
+            }
+            resetmistake4Data();
 
 
-        //     mistake4Data.contentLocation = {
-        //         start: {
-        //             "line": object.loc.start.line, 
-        //             "column": object.loc.start.column
-        //         },
-        //         end: {
-        //             "line": object.loc.end.line, 
-        //             "column": object.loc.end.column
-        //         }
-        //     };
-        // }
+            mistake4Data.contentLocation = {
+                start: {
+                    "line": object.loc.start.line, 
+                    "column": object.loc.start.column
+                },
+                end: {
+                    "line": object.loc.end.line, 
+                    "column": object.loc.end.column
+                }
+            };
+        }
     }
 
     function findInputSizeMistake4(object) {
@@ -1499,24 +1499,113 @@ export default function(positionOfForms) {
     }
 
     function findTextSizeMistake10(object) {
-        if (object.value && object.value == 'footer') {
-            //console.log(object);
-            mistake10Data.isFooter = true;
-            mistake10Data.isTextModFound = false;
-        }
-        else if (object.value && object.value == 'text' && mistake10Data.isFooter && !mistake10Data.isTextModFound) {
-            //console.log(object);
-            mistake10Data.isText = true;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake10Data.isText) {
-                //console.log(object.value);
-                mistake10Data.textSize = object.value.value;
-                mistake10Data.isFooter = false;
-                mistake10Data.isText = false;
-                mistake10Data.isTextModFound = true;
-                //console.log(mistake1Data);
+        // if (object.value && object.value == 'footer') {
+        //     //console.log(object);
+        //     mistake10Data.isFooter = true;
+        //     mistake10Data.isTextModFound = false;
+        // }
+        // else if (object.value && object.value == 'text' && mistake10Data.isFooter && !mistake10Data.isTextModFound) {
+        //     //console.log(object);
+        //     mistake10Data.isText = true;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake10Data.isText) {
+        //         //console.log(object.value);
+        //         mistake10Data.textSize = object.value.value;
+        //         mistake10Data.isFooter = false;
+        //         mistake10Data.isText = false;
+        //         mistake10Data.isTextModFound = true;
+        //         //console.log(mistake1Data);
+        // }
+
+
+        if (object.children && object.children.length >= 3 && 
+            object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'form' && 
+            object.children[1].value &&  
+            object.children[1].value.value && object.children[1].value.value == 'footer') {
+
+            // console.log('[findTextSizeMistake10]');
+            // console.log(object);
+
+            for (let i = 2, length = object.children.length; i < length; i++) {
+
+                if (object.children[i].key && object.children[i].value && 
+                    object.children[i].key.value && object.children[i].key.value == 'content') {
+
+                    const child = object.children[i].value;
+                    
+                    // console.log('child');
+                    // console.log(child);
+
+                    if (child && child.type == 'Object' && child.children && child.children.length >= 2 && 
+                        child.children[0].value && 
+                        child.children[0].value.value && child.children[0].value.value == 'text' && 
+                        child.children[1].key && 
+                        child.children[1].key.value && 
+                        (child.children[1].key.value == 'mods' || child.children[1].key.value == 'elemMods')) {
+        
+                        const textMod = child.children[1].value;
+        
+                        if (textMod && textMod.children && textMod.children.length > 0) {
+        
+                            textMod.children.forEach(item => {
+        
+                                if (item.key && item.key.value && item.key.value == 'size' && 
+                                    item.value && item.value.value) {
+        
+                                    mistake10Data.textSize = item.value.value;
+                                    mistake10Data.isFooter = false;
+                                    mistake10Data.isText = false;
+                                    mistake10Data.isTextModFound = true;
+                                }
+                            })
+                        }
+                    }
+                    else if (child && child.type == 'Array' && child.children && child.children.length > 0) {
+
+                        // console.log('isArray');
+                        // console.log(child.children);
+
+                        child.children.forEach(element => {
+
+                            // console.log('element');
+                            // console.log(element);
+                            // console.log(`element.children && element.children >= 2 : ${element.children && element.children.length >= 2}`);
+                            // console.log(`element.children[0].value && element.children[0].value.value && element.children[0].value.value == 'text' : ${element.children[0].value && element.children[0].value.value && element.children[0].value.value == 'text'}`);
+                            // console.log(`element.children[1].key.value && (element.children[1].key.value == 'mods' || element.children[1].key.value == 'elemMods') : ${element.children[1].key.value && (element.children[1].key.value == 'mods' || element.children[1].key.value == 'elemMods')}`);
+
+                            if (element.children && element.children.length >= 2 && 
+                                element.children[0].value && 
+                                element.children[0].value.value && element.children[0].value.value == 'text' && 
+                                element.children[1].key.value && 
+                                (element.children[1].key.value == 'mods' || element.children[1].key.value == 'elemMods')) {
+
+                                const textMod = element.children[1].value;
+
+                                // console.log('textMod');
+                                // console.log(textMod);
+
+                                if (textMod && textMod.children && textMod.children.length > 0) {
+        
+                                    textMod.children.forEach(item => {
+                
+                                        if (item.key && item.key.value && item.key.value == 'size' && 
+                                            item.value && item.value.value) {
+                
+                                            mistake10Data.textSize = item.value.value;
+                                            mistake10Data.isFooter = false;
+                                            mistake10Data.isText = false;
+                                            mistake10Data.isTextModFound = true;
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    }
+                }
+            }
         }
     }
 
