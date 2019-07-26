@@ -146,6 +146,19 @@ export default
                         },
                         {
                             "block": "form",
+                            "content": [
+                                {
+                                        "block": "form",
+                                        "elem": "label",
+                                        "content": {}
+                                },
+                                {"block": "text", "mods": { "size": "l" } },
+                                { "block": "input", "mods": { "size": "l" } },
+                                { "block": "button", "mods": { "size": "xl" } }
+                            ]
+                        },
+                        {
+                            "block": "form",
                             "content": {
                                 "block": "form",
                                 "elem": "content",

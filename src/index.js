@@ -1,62 +1,53 @@
 
-import bem from './js/bemdata';
 import searchAllForms from './js/searchAllForms';
 import searchFormMistakes from './js/searchFormMistakes/searchFormMistakes';
 import searchTextMistakes from './js/searchTextMistakes/searchTextMistakes';
 
-//export default function(bem) {
-
-// function linter(bem) {
     
-    const lint = (bem) => {
-        const positionOfForms = searchAllForms(bem);
-        //console.log(positionOfForms);
+const lint = (bem) => {
+    const positionOfForms = searchAllForms(bem);
+    //console.log(positionOfForms);
 
-        let resultMistakes = searchFormMistakes(positionOfForms);
+    let resultMistakes = searchFormMistakes(positionOfForms);
 
-        resultMistakes = searchTextMistakes(bem, resultMistakes);
+    resultMistakes = searchTextMistakes(bem, resultMistakes);
 
-        //console.log(resultMistakes);
-        return resultMistakes;
+    //console.log(resultMistakes);
+    return resultMistakes;
+}
+
+function isBrowser() {
+    try {
+        return window;
     }
-
-    function isBrowser() {
-        try {
-            return window;
-        }
-        catch {
-            return false;
-        }
+    catch {
+        return false;
     }
+}
 
-    function isNode() {
-        try {
-            return global
-        }
-        catch {
-            return false;
-        }
+function isNode() {
+    try {
+        return global
     }
-    
-    function createGlobalVariable() {
-        if (!!isBrowser()) {
-            //console.log('<><><><><> BROWSER <><><><><>');
-    
-            window.lint = lint;
-        }
-        else if (!!isNode()) {
-            //console.log('<><><><><> NODE <><><><><>');
-    
-            global.lint = lint;
-        }
+    catch {
+        return false;
     }
-    createGlobalVariable();
+}
+
+function createGlobalVariable() {
+    if (!!isBrowser()) {
+        window.lint = lint;
+    }
+    else if (!!isNode()) {
+        global.lint = lint;
+    }
+}
+createGlobalVariable();
     
-// }
-//linter(bem);
 
 
-// test issues
+
+// uncomment this section to run tests
 // export const lint = (bem) => {
 //     const positionOfForms = searchAllForms(bem);
 //     //console.log(positionOfForms);

@@ -277,10 +277,10 @@ export default function(positionOfForms) {
         let position = -1;
         positionOfForms.forEach(form => {
             position++;
-            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            // console.log(`position = ${position}`);
-            // console.log(form);
+            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            console.log(`position = ${position}`);
+            console.log(form);
             inspectForm(form);
 
 
@@ -357,67 +357,72 @@ export default function(positionOfForms) {
         findButtonSizeMistake1(object);
     }
 
-    function findTextSizeMistake1(object) {
-        if (object.value && object.value == 'label') {
-            //console.log(object);
-            mistake1Data.isLabel = true;
-            mistake1Data.isTextModFound = false;
-        }
-        else if (object.value && object.value == 'text' && mistake1Data.isLabel && !mistake1Data.isTextModFound) {
-            //console.log(object);
-            mistake1Data.isText = true;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake1Data.isText) {
-                // console.log('[findTextSizeMistake1]');
-                // console.log(object.value);
-                mistake1Data.textSize = object.value.value;
-                mistake1Data.isLabel = false;
-                mistake1Data.isText = false;
-                mistake1Data.isTextModFound = true;
-                //console.log(mistake1Data);
-
-                mistake1Sizes.push(object.value.value);
-                // console.log('mistake1Sizes');
-                // console.log(mistake1Sizes);
-        }
-    }
-
     // function findTextSizeMistake1(object) {
-    //     if (object.children && object.children.length >= 3 && 
-    //         object.children[0].value && 
-    //         object.children[0].value.value && object.children[0].value.value == 'form' && 
-    //         object.children[1].value &&  
-    //         object.children[1].value.value && object.children[1].value.value == 'label' &&
-    //         object.children[2].key && 
-    //         object.children[2].key.value && object.children[1].key.value == 'content') {
+    //     if (object.value && object.value == 'label') {
+    //         //console.log(object);
+    //         mistake1Data.isLabel = true;
+    //         mistake1Data.isTextModFound = false;
+    //     }
+    //     else if (object.value && object.value == 'text' && mistake1Data.isLabel && !mistake1Data.isTextModFound) {
+    //         //console.log(object);
+    //         mistake1Data.isText = true;
+    //     }
+    //     else if (object.key && 
+    //         object.key.value && object.key.value == 'size' && 
+    //         object.value && object.value.value && mistake1Data.isText) {
+    //             // console.log('[findTextSizeMistake1]');
+    //             // console.log(object.value);
+    //             mistake1Data.textSize = object.value.value;
+    //             mistake1Data.isLabel = false;
+    //             mistake1Data.isText = false;
+    //             mistake1Data.isTextModFound = true;
+    //             //console.log(mistake1Data);
 
-    //         const child = object.children[2].value;
-
-    //         if (child && child.children && child.children >= 2 && 
-    //             child.children[0].value && 
-    //             child.children[0].value.value && child.children[0].value.value == 'text' && 
-    //             child.children[1].key && 
-    //             child.children[1].key.value && child.children[1].key.value == 'mods') {
-
-    //             const textMod = child.children[1].value;
-
-    //             if (textMod && textMod.children && textMod.children > 0) {
-
-    //                 textMod.children.forEach(item => {
-
-    //                     if (item.key && item.key.value && item.key.value == 'size' && 
-    //                         item.value && item.value.value) {
-
-    //                         mistake1Data.textSize = item.value.value;
-    //                         mistake1Data.isTextModFound = true;
-    //                     }
-    //                 })
-    //             }
-    //         }
+    //             mistake1Sizes.push(object.value.value);
+    //             // console.log('mistake1Sizes');
+    //             // console.log(mistake1Sizes);
     //     }
     // }
+
+    function findTextSizeMistake1(object) {
+        if (object.children && object.children.length >= 3 && 
+            object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'form' && 
+            object.children[1].value &&  
+            object.children[1].value.value && object.children[1].value.value == 'label' && 
+            object.children[2].key && object.children[2].value && 
+            object.children[2].key.value && object.children[2].key.value == 'content') {
+
+
+            const child = object.children[2].value;
+
+            console.log('[findTextSizeMistake1] : within label');
+            
+            if (child && child.children && child.children.length >= 2 && 
+                child.children[0].value && 
+                child.children[0].value.value && child.children[0].value.value == 'text' && 
+                child.children[1].key && 
+                child.children[1].key.value && 
+                (child.children[1].key.value == 'mods' || child.children[1].key.value == 'elemMods')) {
+
+                const textMod = child.children[1].value;
+
+                if (textMod && textMod.children && textMod.children.length > 0) {
+
+                    textMod.children.forEach(item => {
+
+                        if (item.key && item.key.value && item.key.value == 'size' && 
+                            item.value && item.value.value) {
+
+                            mistake1Data.textSize = item.value.value;
+                            mistake1Data.isTextModFound = true;
+                            mistake1Sizes.push(item.value.value);
+                        }
+                    })
+                }
+            }
+        }
+    }
 
     function findInputSizeMistake1(object) {
         if (object.value && object.value == 'input') {
