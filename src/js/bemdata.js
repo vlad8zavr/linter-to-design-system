@@ -207,7 +207,7 @@ export default
                                 {
                                     "block": "form",
                                     "elem": "header",
-                                    "content": { "block": "input", "mods": { "size": "l" } },
+                                    "content": { "block": "input", "mods": { "size": "xl" } },
                                     "mix": [{ "block": "form", "elem": "item", "elemMods": {  "space-v": "xxl" } }]
                                 },
                                 {

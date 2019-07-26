@@ -277,10 +277,10 @@ export default function(positionOfForms) {
         let position = -1;
         positionOfForms.forEach(form => {
             position++;
-            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-            console.log(`position = ${position}`);
-            console.log(form);
+            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            // console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+            // console.log(`position = ${position}`);
+            // console.log(form);
             inspectForm(form);
 
 
@@ -357,33 +357,6 @@ export default function(positionOfForms) {
         findButtonSizeMistake1(object);
     }
 
-    // function findTextSizeMistake1(object) {
-    //     if (object.value && object.value == 'label') {
-    //         //console.log(object);
-    //         mistake1Data.isLabel = true;
-    //         mistake1Data.isTextModFound = false;
-    //     }
-    //     else if (object.value && object.value == 'text' && mistake1Data.isLabel && !mistake1Data.isTextModFound) {
-    //         //console.log(object);
-    //         mistake1Data.isText = true;
-    //     }
-    //     else if (object.key && 
-    //         object.key.value && object.key.value == 'size' && 
-    //         object.value && object.value.value && mistake1Data.isText) {
-    //             // console.log('[findTextSizeMistake1]');
-    //             // console.log(object.value);
-    //             mistake1Data.textSize = object.value.value;
-    //             mistake1Data.isLabel = false;
-    //             mistake1Data.isText = false;
-    //             mistake1Data.isTextModFound = true;
-    //             //console.log(mistake1Data);
-
-    //             mistake1Sizes.push(object.value.value);
-    //             // console.log('mistake1Sizes');
-    //             // console.log(mistake1Sizes);
-    //     }
-    // }
-
     function findTextSizeMistake1(object) {
         if (object.children && object.children.length >= 3 && 
             object.children[0].value && 
@@ -393,10 +366,7 @@ export default function(positionOfForms) {
             object.children[2].key && object.children[2].value && 
             object.children[2].key.value && object.children[2].key.value == 'content') {
 
-
             const child = object.children[2].value;
-
-            console.log('[findTextSizeMistake1] : within label');
             
             if (child && child.children && child.children.length >= 2 && 
                 child.children[0].value && 
@@ -417,6 +387,8 @@ export default function(positionOfForms) {
                             mistake1Data.textSize = item.value.value;
                             mistake1Data.isTextModFound = true;
                             mistake1Sizes.push(item.value.value);
+                            // console.log('[findTextSizeMistake1] mistake1Sizes');
+                            // console.log(mistake1Sizes);
                         }
                     })
                 }
@@ -441,7 +413,7 @@ export default function(positionOfForms) {
                 //console.log(mistake1Data);
 
                 mistake1Sizes.push(object.value.value);
-                // console.log('mistake1Sizes');
+                // console.log('[findTextSizeMistake1] mistake1Sizes');
                 // console.log(mistake1Sizes);
         }
     }
@@ -462,7 +434,7 @@ export default function(positionOfForms) {
                 //console.log(mistake1Data);
 
                 mistake1Sizes.push(object.value.value);
-                // console.log('mistake1Sizes');
+                // console.log('[findTextSizeMistake1] mistake1Sizes');
                 // console.log(mistake1Sizes);
         }
     }
@@ -492,7 +464,7 @@ export default function(positionOfForms) {
         // console.log('[isMistake1Exist]');
         // console.log(`mistake1Data.textSize != '' && mistake1Sizes && mistake1Sizes.length > 1 : ${mistake1Data.textSize != '' && mistake1Sizes && mistake1Sizes.length > 1}`);
         // console.log('-------------------------------------------');
-        if (mistake1Data.textSize != '' && mistake1Sizes && mistake1Sizes.length > 1) {
+        if (mistake1Sizes && mistake1Sizes.length > 1) {
             
             //console.log('-------- before cycle --------');
             for (let i = 0, length = mistake1Sizes.length; i < length - 1; i++) {
