@@ -288,7 +288,7 @@ export default function(positionOfForms) {
             checkMistake2();
             // checkMistake3();
         
-            //checkMistake4();
+            // checkMistake4();
             
             // checkMistake5();
             // checkMistake6();
@@ -477,7 +477,8 @@ export default function(positionOfForms) {
 
     function detectMistake2(object) {
 
-        findContentLocation(object, mistake2Data);
+        //findContentLocation(object, mistake2Data);
+        findContentLocation2(object);
 
         if (isElementPresent(object, 'content')) {
             mistake2Data.isElemContent = true;
@@ -501,6 +502,39 @@ export default function(positionOfForms) {
             findSpaceVSizeMistake2(object);
         }
 
+    }
+
+    function findContentLocation2(object) {
+        if (object.children && object.children.length >= 3 && 
+            object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'form' && 
+            object.children[1].value &&  
+            object.children[1].value.value && object.children[1].value.value == 'content') {
+
+
+            if (isMistake2Exist()) {
+                mistake2Data.isMistake = true;
+    
+                resultMistakes.push(
+                    {"code": listOfMistakesForm[1]["code"],
+                        "error": listOfMistakesForm[1]["error"],
+                        "location": mistake2Data.contentLocation
+                    }
+                );
+            }
+            resetmistake2Data();
+
+            mistake2Data.contentLocation = {
+                start: {
+                    "line": object.loc.start.line, 
+                    "column": object.loc.start.column
+                },
+                end: {
+                    "line": object.loc.end.line, 
+                    "column": object.loc.end.column
+                }
+            };
+        }
     }
 
     function isElementPresent(object, value) {
@@ -532,8 +566,7 @@ export default function(positionOfForms) {
                 mistake2Data.inputSize = object.value.value;
                 mistake2Data.isInput = false;
                 mistake2Data.isInputModFound = true;
-                // console.log('[findInputSizeMistake2] value');
-                // console.log(mistake2Data.inputSize);
+
         }
     }
 
@@ -547,6 +580,7 @@ export default function(positionOfForms) {
                 mistake2Data.isMix = false;
                 mistake2Data.isFormSpaceV = true;
                 mistake2Data.isElemItem = false;
+
         }
     }
 
@@ -565,8 +599,12 @@ export default function(positionOfForms) {
 
     function isMistake2Exist() {
 
-        if (mistake2Data.isElemContent && mistake2Data.isElemItem && 
-            mistake2Data.inputSize != '' && mistake2Data.formSpaceSize != '') {
+        // console.log('[isMistake2Exist]');
+        // console.log(`mistake2Data.inputSize = ${mistake2Data.inputSize}`);
+        // console.log(`mistake2Data.formSpaceSize = ${mistake2Data.formSpaceSize}`);
+        // console.log(`mistake2Data.isElemContent && mistake2Data.isElemItem = ${mistake2Data.isElemContent && mistake2Data.isElemItem}`);
+
+        if (mistake2Data.inputSize != '' && mistake2Data.formSpaceSize != '') {
             let inputSize = listOfSizes[mistake2Data.inputSize];
             let formSpaceSize = listOfSizes[mistake2Data.formSpaceSize];
 
@@ -585,7 +623,8 @@ export default function(positionOfForms) {
 
     function detectMistake3(object) {
 
-        findContentLocation(object, mistake3Data);
+        //findContentLocation(object, mistake3Data);
+        findContentLocation3(object);
 
         if (isElementPresent(object, 'content')) {
             mistake3Data.isElemContent = true;
@@ -604,24 +643,38 @@ export default function(positionOfForms) {
 
     }
 
-    function findContentLocation(object, mistakeInfo) {
-        if (object.children && object.children.length >= 3 && 
-            object.children[0].value && 
-            object.children[0].value.value && object.children[0].value.value == 'form' && 
-            object.children[1].value &&  
-            object.children[1].value.value && object.children[1].value.value == 'content') {
+    function findContentLocation3(object) {
+        // if (object.children && object.children.length >= 3 && 
+        //     object.children[0].value && 
+        //     object.children[0].value.value && object.children[0].value.value == 'form' && 
+        //     object.children[1].value &&  
+        //     object.children[1].value.value && object.children[1].value.value == 'content') {
 
-                mistakeInfo.contentLocation = {
-                start: {
-                    "line": object.loc.start.line, 
-                    "column": object.loc.start.column
-                },
-                end: {
-                    "line": object.loc.end.line, 
-                    "column": object.loc.end.column
-                }
-            };
-        }
+
+        //     if (isMistake3Exist()) {
+        //         mistake3Data.isMistake = true;
+    
+        //         resultMistakes.push(
+        //             {"code": listOfMistakesForm[2]["code"],
+        //                 "error": listOfMistakesForm[2]["error"],
+        //                 "location": mistake3Data.contentLocation
+        //             }
+        //         );
+        //     }
+        //     resetmistake3Data();
+
+
+        //     mistake3Data.contentLocation = {
+        //         start: {
+        //             "line": object.loc.start.line, 
+        //             "column": object.loc.start.column
+        //         },
+        //         end: {
+        //             "line": object.loc.end.line, 
+        //             "column": object.loc.end.column
+        //         }
+        //     };
+        // }
     }
 
     function findInputSizeMistake3(object) {
@@ -709,11 +762,6 @@ export default function(positionOfForms) {
         //     object.children[0].value.value && object.children[0].value.value == 'form' && 
         //     object.children[1].value &&  
         //     object.children[1].value.value && object.children[1].value.value == 'content-item') {
-
-        //     // console.log('[findContentItemLocation]');
-        //     // console.log(`start = ${object.loc.start.line}, end = ${object.loc.end.line}`);
-        //     // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
-        //     // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
             
         //     if (isMistake4Exist()) {
         //         mistake4Data.isMistake = true;
@@ -727,11 +775,6 @@ export default function(positionOfForms) {
         //     }
         //     resetmistake4Data();
 
-        //     // console.log('afterReset');
-        //     // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
-        //     // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
-        //     // console.log('-----------------------------------------');
-
 
         //     mistake4Data.contentLocation = {
         //         start: {
@@ -743,7 +786,6 @@ export default function(positionOfForms) {
         //             "column": object.loc.end.column
         //         }
         //     };
-
         // }
     }
 
