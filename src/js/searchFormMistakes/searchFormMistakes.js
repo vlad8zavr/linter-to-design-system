@@ -472,6 +472,9 @@ export default function(positionOfForms) {
                 }
             }
         }
+        else if (mistake1Sizes && mistake1Sizes.length == 0) {
+            isError = true;
+        }
         return isError;
     }
 
