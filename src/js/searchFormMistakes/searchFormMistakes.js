@@ -698,13 +698,16 @@ export default function(positionOfForms) {
             mistake3Data.isElemItem = true;
         }
         
-        if (mistake3Data.isElemContent) {
-            findInputSizeMistake3(object);
-        }
+        // if (mistake3Data.isElemContent) {
+        //     findInputSizeMistake3(object);
+        // }
 
-        if (isMix(object, mistake3Data) && mistake3Data.isElemItem) {
-            findSpaceHSizeMistake3(object);
-        }
+        // if (isMix(object, mistake3Data) && mistake3Data.isElemItem) {
+        //     findSpaceHSizeMistake3(object);
+        // }
+
+        findInputSizeMistake3(object);
+        findSpaceHSizeMistake3(object);
 
     }
 
@@ -760,14 +763,105 @@ export default function(positionOfForms) {
 
     function findSpaceHSizeMistake3(object) {
     
-        if (object.key && 
-            object.key.value && object.key.value == 'space-h' && 
-            object.value && object.value.value) {
-                //console.log(object.value);
-                mistake3Data.formSpaceSize = object.value.value;
-                mistake3Data.isMix = false;
-                mistake3Data.isFormSpaceV = true;
-                mistake3Data.isElemItem = false;
+        // if (object.key && 
+        //     object.key.value && object.key.value == 'space-h' && 
+        //     object.value && object.value.value) {
+        //         //console.log(object.value);
+                // mistake3Data.formSpaceSize = object.value.value;
+                // mistake3Data.isMix = false;
+                // mistake3Data.isFormSpaceV = true;
+                // mistake3Data.isElemItem = false;
+        // }
+
+        if (object.children && object.children.length >= 4 && 
+            object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'form' && 
+            object.children[1].value &&  
+            object.children[1].value.value && object.children[1].value.value == 'content') {
+
+            // size loc: object.loc
+            // console.log('[findSpaceHSizeMistake3]');
+            // console.log(object);
+
+            for (let i = 2, length = object.children.length; i < length; i++) {
+
+                if (object.children[i].key && object.children[i].value && 
+                    object.children[i].key.value && object.children[i].key.value == 'mix') {
+
+                    const child = object.children[i].value;
+                
+                    // console.log('child');
+                    // console.log(child);
+
+                    if (child && child.type == 'Object' && child.children && child.children.length >= 3 && 
+                        child.children[0].value && 
+                        child.children[0].value.value && child.children[0].value.value == 'form' && 
+                        child.children[1].value && 
+                        child.children[1].value.value && child.children[1].value.value == 'item' && 
+                        child.children[2].key && child.children[2].key.value && 
+                        (child.children[2].key.value == 'mods' || child.children[2].key.value == 'elemMods')) {
+
+                        //reach the mods / elemMods
+                        const itemMods = child.children[2].value;
+                        // console.log('isObject');
+                        // console.log(itemMods);
+
+                        if (itemMods && itemMods.children && itemMods.children.length > 0) {
+        
+                            itemMods.children.forEach(item => {
+
+                                if (item.key && item.key.value && item.key.value == 'space-h' && 
+                                    item.value && item.value.value) {
+
+                                    mistake3Data.formSpaceSize = item.value.value;
+                                    mistake3Data.isMix = false;
+                                    mistake3Data.isFormSpaceV = true;
+                                    mistake3Data.isElemItem = false;
+
+                                    //console.log(`mistake2Data.formSpaceSize = ${mistake2Data.formSpaceSize}`);
+                                }
+                            })
+                        }
+                    }
+                    else if (child && child.type == 'Array' && child.children && child.children.length > 0) {
+
+                        child.children.forEach(element => {
+
+                            if (element.children && element.children.length >= 3 && 
+                                element.children[0].value && 
+                                element.children[0].value.value && element.children[0].value.value == 'form' && 
+                                element.children[1].value && 
+                                element.children[1].value.value && element.children[1].value.value == 'item' && 
+                                element.children[2].key && element.children[2].key.value && 
+                                (element.children[2].key.value == 'mods' || element.children[2].key.value == 'elemMods')) {
+
+                                //reach the mods / elemMods
+                                const itemMods = element.children[2].value;
+                                // console.log('isArray');
+                                // console.log(itemMods);
+
+                                if (itemMods && itemMods.children && itemMods.children.length > 0) {
+        
+                                    itemMods.children.forEach(item => {
+
+                                        if (item.key && item.key.value && item.key.value == 'space-h' && 
+                                            item.value && item.value.value) {
+
+                                            mistake3Data.formSpaceSize = item.value.value;
+                                            mistake3Data.isMix = false;
+                                            mistake3Data.isFormSpaceV = true;
+                                            mistake3Data.isElemItem = false;
+
+                                            //console.log(`mistake2Data.formSpaceSize = ${mistake2Data.formSpaceSize}`);
+                                        }
+                                    })
+                                }
+                            }
+                        })
+                    }
+                }
+            }
+
         }
     }
 
@@ -795,6 +889,10 @@ export default function(positionOfForms) {
                     return false;
             }
             else return true;
+        }
+        else if (mistake3Data.isElemContent && mistake3Data.isElemItem && 
+                mistake3Data.inputSize != '' && mistake3Data.formSpaceSize == '') {
+            return true;
         }
         else return false;
     }
