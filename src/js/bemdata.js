@@ -1,4 +1,3 @@
-export default 
 `{
 	"block": "layout",
 	"content":
@@ -329,14 +328,18 @@ export default
                                 {
                                     "block": "form",
                                     "elem": "footer",
-                                    "content": [
-                                        {
-                                            "block": "text",
-                                            "mods": {
-                                                "size": "xxl"
-                                            }
+                                    "content": {
+                                        "block": "text",
+                                        "mods": {
+                                            "size": "xxl"
                                         }
-                                    ]
+                                    }
+                                },
+                                {
+                                    "block": "text",
+                                    "mods": {
+                                        "size": "xxl"
+                                    }
                                 }
                             ]
                         }

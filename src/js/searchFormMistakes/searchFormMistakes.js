@@ -1475,7 +1475,7 @@ export default function(positionOfForms) {
 
     function detectMistake10(object) {
 
-        findTextLocation10(object);
+        //findTextLocation10(object);
         findTextSizeMistake10(object);
         findInputSizeMistake10(object);
     }
@@ -1502,26 +1502,6 @@ export default function(positionOfForms) {
     }
 
     function findTextSizeMistake10(object) {
-        // if (object.value && object.value == 'footer') {
-        //     //console.log(object);
-        //     mistake10Data.isFooter = true;
-        //     mistake10Data.isTextModFound = false;
-        // }
-        // else if (object.value && object.value == 'text' && mistake10Data.isFooter && !mistake10Data.isTextModFound) {
-        //     //console.log(object);
-        //     mistake10Data.isText = true;
-        // }
-        // else if (object.key && 
-        //     object.key.value && object.key.value == 'size' && 
-        //     object.value && object.value.value && mistake10Data.isText) {
-        //         //console.log(object.value);
-        //         mistake10Data.textSize = object.value.value;
-        //         mistake10Data.isFooter = false;
-        //         mistake10Data.isText = false;
-        //         mistake10Data.isTextModFound = true;
-        //         //console.log(mistake1Data);
-        // }
-
 
         if (object.children && object.children.length >= 3 && 
             object.children[0].value && 
@@ -1562,6 +1542,19 @@ export default function(positionOfForms) {
                                     mistake10Data.isFooter = false;
                                     mistake10Data.isText = false;
                                     mistake10Data.isTextModFound = true;
+
+                                    // console.log('[findTextSizeMistake10] object');
+                                    // console.log(child);
+                                    mistake10Data.location = {
+                                        start: {
+                                            "line": child.loc.start.line, 
+                                            "column": child.loc.start.column
+                                        },
+                                        end: {
+                                            "line": child.loc.end.line, 
+                                            "column": child.loc.end.column
+                                        }
+                                    };
                                 }
                             })
                         }
@@ -1601,6 +1594,19 @@ export default function(positionOfForms) {
                                             mistake10Data.isFooter = false;
                                             mistake10Data.isText = false;
                                             mistake10Data.isTextModFound = true;
+
+                                            // console.log('[findTextSizeMistake10] array');
+                                            // console.log(element);
+                                            mistake10Data.location = {
+                                                start: {
+                                                    "line": element.loc.start.line, 
+                                                    "column": element.loc.start.column
+                                                },
+                                                end: {
+                                                    "line": element.loc.end.line, 
+                                                    "column": element.loc.end.column
+                                                }
+                                            };
                                         }
                                     })
                                 }
