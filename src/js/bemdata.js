@@ -189,6 +189,7 @@
                                     {
                                         "block": "form",
                                         "elem":  "content-item",
+                                        "mix": { "block": "form", "elem": "item", "elemMods": {  "space-v": "xl" } },
                                         "content": { "block": "input", "mods": { "size": "l" } }
                                     },
                                     {

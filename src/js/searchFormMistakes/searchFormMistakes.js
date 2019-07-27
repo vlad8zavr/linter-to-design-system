@@ -915,6 +915,7 @@ export default function(positionOfForms) {
         if (isMix(object, mistake4Data) && mistake4Data.isElemItem) {
             findIndentBSizeMistake4(object);
         }
+        
 
     }
 
@@ -1009,6 +1010,10 @@ export default function(positionOfForms) {
                     return false;
             }
             else return true;
+        }
+        else if (mistake4Data.isElemContent && mistake4Data.isElemItem && 
+                mistake4Data.inputSize != '' && mistake4Data.formIndentSize == '') {
+            return true;
         }
         // else if (mistake4Data.inputSize != '' && mistake4Data.formIndentSize == '') {
         //     // console.log('[isMistake4Exist]');
