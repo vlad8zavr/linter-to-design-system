@@ -489,15 +489,7 @@ export default function(positionOfForms) {
         if (isElementPresent(object, 'item')) {
             mistake2Data.isElemItem = true;
         }
-        
 
-        // if (mistake2Data.isElemContent) {
-        //     findInputSizeMistake2(object);
-        // }
-
-        // if (isMix(object, mistake2Data) && mistake2Data.isElemItem) {
-        //     findSpaceVSizeMistake2(object);
-        // }
 
         findInputSizeMistake2(object);
 
@@ -617,8 +609,12 @@ export default function(positionOfForms) {
             }
             else return true;
         }
+        // else if (mistake2Data.isElemContent && mistake2Data.isElemItem && 
+        //          mistake2Data.inputSize != '' && mistake2Data.formSpaceSize == '') {
+        //     return true;
+        // }
         else if (mistake2Data.isElemContent && mistake2Data.isElemItem && 
-                 mistake2Data.inputSize != '' && mistake2Data.formSpaceSize == '') {
+                 mistake2Data.formSpaceSize == '') {
             return true;
         }
         else return false;
@@ -1475,32 +1471,10 @@ export default function(positionOfForms) {
 
     function detectMistake10(object) {
 
-        //findTextLocation10(object);
         findTextSizeMistake10(object);
         findInputSizeMistake10(object);
     }
   
-    function findTextLocation10(object) {
-
-        if (object.children && object.children.length >= 2) {
-
-            if (object.children[0].value && 
-                object.children[0].value.value && object.children[0].value.value == 'text') {
-        
-                mistake10Data.location = {
-                    start: {
-                        "line": object.loc.start.line, 
-                        "column": object.loc.start.column
-                    },
-                    end: {
-                        "line": object.loc.end.line, 
-                        "column": object.loc.end.column
-                    }
-                };
-            }
-        }
-    }
-
     function findTextSizeMistake10(object) {
 
         if (object.children && object.children.length >= 3 && 
