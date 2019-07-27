@@ -1011,10 +1011,6 @@ export default function(positionOfForms) {
             }
             else return true;
         }
-        else if (mistake4Data.isElemContent && mistake4Data.isElemItem && 
-                mistake4Data.inputSize != '' && mistake4Data.formIndentSize == '') {
-            return true;
-        }
         // else if (mistake4Data.inputSize != '' && mistake4Data.formIndentSize == '') {
         //     // console.log('[isMistake4Exist]');
         //     // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
