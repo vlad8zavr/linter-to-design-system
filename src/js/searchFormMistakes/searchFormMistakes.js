@@ -545,102 +545,19 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake2(object) {
-        // if (object.value && object.value == 'input') {
-        //     //console.log(object);
-        //     mistake2Data.isInput = true;
-        //     mistake2Data.isInputModFound = false;
-        // }
-        // else if (object.key && 
-        //     object.key.value && object.key.value == 'size' && 
-        //     object.value && object.value.value && mistake2Data.isInput) {
-        //         //console.log(object.value);
-        //         mistake2Data.inputSize = object.value.value;
-        //         mistake2Data.isInput = false;
-        //         mistake2Data.isInputModFound = true;
-
-        // }
-
-        if (object.children && object.children.length >= 4 && 
-            object.children[0].value && 
-            object.children[0].value.value && object.children[0].value.value == 'form' && 
-            object.children[1].value &&  
-            object.children[1].value.value && object.children[1].value.value == 'content') {
-
-            // size loc: object.loc
-            //console.log('[findInputSizeMistake2]');
+        if (object.value && object.value == 'input') {
             //console.log(object);
+            mistake2Data.isInput = true;
+            mistake2Data.isInputModFound = false;
+        }
+        else if (object.key && 
+            object.key.value && object.key.value == 'size' && 
+            object.value && object.value.value && mistake2Data.isInput) {
+                //console.log(object.value);
+                mistake2Data.inputSize = object.value.value;
+                mistake2Data.isInput = false;
+                mistake2Data.isInputModFound = true;
 
-            for (let i = 2, length = object.children.length; i < length; i++) {
-
-                if (object.children[i].key && object.children[i].value && 
-                    object.children[i].key.value && object.children[i].key.value == 'content') {
-
-                    const child = object.children[i].value;
-            
-                    //console.log('child');
-                    //console.log(child);
-
-                    if (child && child.type == 'Object' && child.children && child.children.length >= 2 && 
-                        child.children[0].value && 
-                        child.children[0].value.value && child.children[0].value.value == 'input' && 
-                        child.children[1].key && child.children[1].key.value && 
-                        (child.children[1].key.value == 'mods' || child.children[1].key.value == 'elemMods')) {
-
-                        const inputMods = child.children[1].value;
-                        //console.log('isObject');
-                        //console.log(inputMods);
-
-                        if (inputMods && inputMods.children && inputMods.children.length > 0) {
-
-                            inputMods.children.forEach(item => {
-
-                                if (item.key && item.key.value && item.key.value == 'size' && 
-                                    item.value && item.value.value) {
-
-                                    mistake2Data.inputSize = item.value.value;
-                                    mistake2Data.isInput = false;
-                                    mistake2Data.isInputModFound = true;
-
-                                    //console.log(`mistake2Data.inputSize = ${mistake2Data.inputSize}`);
-                                }
-                            })
-                        }
-                    }
-                    else if (child && child.type == 'Array' && child.children && child.children.length > 0) {
-
-                        child.children.forEach(element => {
-
-                            if (element.children && element.children.length >= 3 && 
-                                element.children[0].value && 
-                                element.children[0].value.value && element.children[0].value.value == 'input' && 
-                                element.children[1].key && element.children[1].key.value && 
-                                (element.children[1].key.value == 'mods' || element.children[1].key.value == 'elemMods')) {
-
-                                const inputMods = child.children[1].value;
-                                //console.log('isArray');
-                                //console.log(inputMods);
-
-                                if (inputMods && inputMods.children && inputMods.children.length > 0) {
-
-                                    inputMods.children.forEach(item => {
-        
-                                        if (item.key && item.key.value && item.key.value == 'size' && 
-                                            item.value && item.value.value) {
-        
-                                            mistake2Data.inputSize = item.value.value;
-                                            mistake2Data.isInput = false;
-                                            mistake2Data.isInputModFound = true;
-        
-                                            //console.log(`mistake2Data.inputSize = ${mistake2Data.inputSize}`);
-                                        }
-                                    })
-                                }
-                            }
-
-                        })
-                    }
-                }
-            }
         }
     }
 
