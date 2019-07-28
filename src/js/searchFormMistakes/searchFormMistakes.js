@@ -1033,10 +1033,6 @@ export default function(positionOfForms) {
 
     function checkMistake4(last = false) {
         
-        console.log('[checkMistake4]');
-        console.log(mistake4Data.contentLocation);
-        console.log(`last : ${last}`);
-
         if (isMistake4Exist(last)) {
             mistake4Data.isMistake = true;
 
@@ -1051,10 +1047,10 @@ export default function(positionOfForms) {
 
     function isMistake4Exist(last = false) {
 
-        console.log('[isMistake4Exist]');
-        console.log(mistake4Data.contentLocation);
-        console.log(`last : ${last}`);
-        console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
+        // console.log('[isMistake4Exist]');
+        // console.log(mistake4Data.contentLocation);
+        // console.log(`last : ${last}`);
+        // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
 
         if (!last && mistake4Data.inputSize != '' && mistake4Data.formIndentSize != '') {
             let inputSize = listOfSizes[mistake4Data.inputSize];
@@ -1065,6 +1061,9 @@ export default function(positionOfForms) {
                     return false;
             }
             else return true;
+        }
+        else if (!last && mistake4Data.inputSize != '' && mistake4Data.formIndentSize == '') {
+            return true;
         }
         else if (last && mistake4Data.formIndentSize != '') {
             return true;
