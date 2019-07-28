@@ -240,12 +240,6 @@
                                     ]
                                 },
                                 {
-                                    "block": "input",
-                                    "mods": {
-                                        "size": "l"
-                                    }
-                                },
-                                {
                                     "block": "text",
                                     "mods": {
                                         "size": "s"

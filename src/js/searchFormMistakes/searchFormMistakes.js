@@ -285,28 +285,33 @@ export default function(positionOfForms) {
 
 
             checkMistake1(position);
-            checkMistake2();
-            checkMistake3();
-        
-            checkMistake4(true);
-            
-            checkMistake5();
-            checkMistake6();
-            checkMistake7();
-            checkMistake8();
-            checkMistake9();
-            checkMistake10();
-
-
             resetmistake1Data();
+
+            checkMistake2();
             resetmistake2Data();
+
+            checkMistake3();
             resetmistake3Data();
+      
+            checkMistake4(true);
             resetmistake4Data();
+
+            checkMistake5();
             resetmistake5Data();
+
+            checkMistake6();
             resetmistake6Data();
+
+            checkMistake7();
             resetmistake7Data();
+            
+            checkMistake8();
             resetmistake8Data();
+            
+            checkMistake9();
             resetmistake9Data();
+            
+            checkMistake10();
             resetmistake10Data();
         })
 
@@ -387,8 +392,6 @@ export default function(positionOfForms) {
                             mistake1Data.textSize = item.value.value;
                             mistake1Data.isTextModFound = true;
                             mistake1Sizes.push(item.value.value);
-                            // console.log('[findTextSizeMistake1] mistake1Sizes');
-                            // console.log(mistake1Sizes);
                         }
                     })
                 }
@@ -416,7 +419,7 @@ export default function(positionOfForms) {
                     element.value && element.value.value) {
 
                     mistake1Sizes.push(element.value.value);
-                    //console.log(`element.value.value = ${element.value.value}`);
+
                 }
             })
         }
@@ -442,7 +445,6 @@ export default function(positionOfForms) {
                     element.value && element.value.value) {
 
                     mistake1Sizes.push(element.value.value);
-                    //console.log(`element.value.value = ${element.value.value}`);
                 }
             })
         }
@@ -473,6 +475,7 @@ export default function(positionOfForms) {
         if (mistake1Sizes && mistake1Sizes.length > 1) {
             
             //console.log('-------- before cycle --------');
+
             for (let i = 0, length = mistake1Sizes.length; i < length - 1; i++) {
 
                 if (mistake1Sizes[i] != mistake1Sizes[i + 1]) {
@@ -809,16 +812,6 @@ export default function(positionOfForms) {
     }
 
     function findSpaceHSizeMistake3(object) {
-    
-        // if (object.key && 
-        //     object.key.value && object.key.value == 'space-h' && 
-        //     object.value && object.value.value) {
-        //         //console.log(object.value);
-                // mistake3Data.formSpaceSize = object.value.value;
-                // mistake3Data.isMix = false;
-                // mistake3Data.isFormSpaceV = true;
-                // mistake3Data.isElemItem = false;
-        // }
 
         if (object.children && object.children.length >= 4 && 
             object.children[0].value && 
@@ -1047,11 +1040,6 @@ export default function(positionOfForms) {
 
     function isMistake4Exist(last = false) {
 
-        // console.log('[isMistake4Exist]');
-        // console.log(mistake4Data.contentLocation);
-        // console.log(`last : ${last}`);
-        // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
-
         if (!last && mistake4Data.inputSize != '' && mistake4Data.formIndentSize != '') {
             let inputSize = listOfSizes[mistake4Data.inputSize];
             let formIndentSize = listOfSizes[mistake4Data.formIndentSize];
@@ -1068,12 +1056,6 @@ export default function(positionOfForms) {
         else if (last && mistake4Data.formIndentSize != '') {
             return true;
         }
-        // else if (mistake4Data.inputSize != '' && mistake4Data.formIndentSize == '') {
-        //     // console.log('[isMistake4Exist]');
-        //     // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
-        //     // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
-        //     return true;
-        // }
         else return false;
     }
 
@@ -1228,7 +1210,8 @@ export default function(positionOfForms) {
             }
             else return true;
         }
-        else return false;
+        //else return false;
+        else return true;
     }
 
     function detectMistake6(object) {
