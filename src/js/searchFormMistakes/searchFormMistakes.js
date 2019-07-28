@@ -570,7 +570,8 @@ export default function(positionOfForms) {
             const child = object.children[1].value;
 
             if (mistake2Data.contentLocation && 
-                child.loc.start.line < mistake2Data.contentLocation.end.line) {
+                child.loc.start.line < mistake2Data.contentLocation.end.line && 
+                child.loc.start.line > mistake2Data.contentLocation.start.line) {
 
                 child.children && child.children.forEach(element => {
 
@@ -788,17 +789,34 @@ export default function(positionOfForms) {
 
             const child = object.children[1].value;
 
-            child.children && child.children.forEach(element => {
+            if (mistake3Data.contentLocation && 
+                child.loc.start.line < mistake3Data.contentLocation.end.line && 
+                child.loc.start.line > mistake3Data.contentLocation.start.line) {
 
-                if (element.key && 
-                    element.key.value && element.key.value == 'size' && 
-                    element.value && element.value.value) {
+                child.children && child.children.forEach(element => {
 
-                    mistake3Data.inputSize = element.value.value;
-                    mistake3Data.isInput = false;
-                    mistake3Data.isInputModFound = true;
-                }
-            })
+                    if (element.key && 
+                        element.key.value && element.key.value == 'size' && 
+                        element.value && element.value.value) {
+    
+                        mistake3Data.inputSize = element.value.value;
+                        mistake3Data.isInput = false;
+                        mistake3Data.isInputModFound = true;
+                    }
+                })
+            }
+
+            // child.children && child.children.forEach(element => {
+
+            //     if (element.key && 
+            //         element.key.value && element.key.value == 'size' && 
+            //         element.value && element.value.value) {
+
+            //         mistake3Data.inputSize = element.value.value;
+            //         mistake3Data.isInput = false;
+            //         mistake3Data.isInputModFound = true;
+            //     }
+            // })
         }
     }
 
