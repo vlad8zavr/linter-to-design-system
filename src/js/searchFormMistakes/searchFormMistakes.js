@@ -397,45 +397,91 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake1(object) {
-        if (object.value && object.value == 'input') {
-            //console.log(object);
-            mistake1Data.isInput = true;
-            mistake1Data.isInputModFound = false;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake1Data.isInput) {
-                // console.log('[findInputSizeMistake1]');
-                // console.log(object.value);
-                mistake1Data.inputSize = object.value.value;
-                mistake1Data.isInput = false;
-                mistake1Data.isInputModFound = true;
-                //console.log(mistake1Data);
+        // if (object.value && object.value == 'input') {
+        //     //console.log(object);
+        //     mistake1Data.isInput = true;
+        //     mistake1Data.isInputModFound = false;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake1Data.isInput) {
+        //         // console.log('[findInputSizeMistake1]');
+        //         // console.log(object.value);
+        //         mistake1Data.inputSize = object.value.value;
+        //         mistake1Data.isInput = false;
+        //         mistake1Data.isInputModFound = true;
+        //         //console.log(mistake1Data);
 
-                mistake1Sizes.push(object.value.value);
-                // console.log('[findTextSizeMistake1] mistake1Sizes');
-                // console.log(mistake1Sizes);
+        //         mistake1Sizes.push(object.value.value);
+        //         // console.log('[findTextSizeMistake1] mistake1Sizes');
+        //         // console.log(mistake1Sizes);
+        // }
+
+        if (object.children && object.children.length >= 2 && 
+            object.children[0] && object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'input' && 
+            object.children[1] && object.children[1].value && object.children[1].key && 
+            object.children[1].key.value && object.children[1].key.value == 'mods') {
+
+            // console.log('[findInputSizeMistake1]');
+            // console.log(object);
+
+            const child = object.children[1].value;
+
+            child.children && child.children.forEach(element => {
+
+                if (element.key && 
+                    element.key.value && element.key.value == 'size' && 
+                    element.value && element.value.value) {
+
+                    mistake1Sizes.push(element.value.value);
+                    //console.log(`element.value.value = ${element.value.value}`);
+                }
+            })
         }
     }
 
     function findButtonSizeMistake1(object) {
-        if (object.value && object.value == 'button') {
-            //console.log(object);
-            mistake1Data.isButton = true;
-            mistake1Data.isButtonModFound = false;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake1Data.isButton) {
-                //console.log(object.value);
-                mistake1Data.buttonSize = object.value.value;
-                mistake1Data.isButton = false;
-                mistake1Data.isButtonModFound = true;
-                //console.log(mistake1Data);
+        // if (object.value && object.value == 'button') {
+        //     //console.log(object);
+        //     mistake1Data.isButton = true;
+        //     mistake1Data.isButtonModFound = false;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake1Data.isButton) {
+        //         //console.log(object.value);
+        //         mistake1Data.buttonSize = object.value.value;
+        //         mistake1Data.isButton = false;
+        //         mistake1Data.isButtonModFound = true;
+        //         //console.log(mistake1Data);
 
-                mistake1Sizes.push(object.value.value);
-                // console.log('[findTextSizeMistake1] mistake1Sizes');
-                // console.log(mistake1Sizes);
+        //         mistake1Sizes.push(object.value.value);
+        //         // console.log('[findTextSizeMistake1] mistake1Sizes');
+        //         // console.log(mistake1Sizes);
+        // }
+
+        if (object.children && object.children.length >= 2 && 
+            object.children[0] && object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'button' && 
+            object.children[1] && object.children[1].value && object.children[1].key && 
+            object.children[1].key.value && object.children[1].key.value == 'mods') {
+
+            // console.log('[findInputSizeMistake1]');
+            // console.log(object);
+
+            const child = object.children[1].value;
+
+            child.children && child.children.forEach(element => {
+
+                if (element.key && 
+                    element.key.value && element.key.value == 'size' && 
+                    element.value && element.value.value) {
+
+                    mistake1Sizes.push(element.value.value);
+                    //console.log(`element.value.value = ${element.value.value}`);
+                }
+            })
         }
     }
 
@@ -1110,40 +1156,23 @@ export default function(positionOfForms) {
     }
 
     function findTextSizeMistake5(object) {
-        // if (object.value && object.value == 'header') {
-        //     //console.log(object);
-        //     mistake5Data.isHeader = true;
-        //     mistake5Data.isTextModFound = false;
-        // }
         if (object.value && object.value == 'text' && mistake5Data.isHeader && !mistake5Data.isTextModFound && 
             object.loc.start.line < mistake5HeaderLocation.end.line) {
             //console.log(object);
             mistake5Data.isText = true;
-            // console.log('[findTextSizeMistake5]');
-            // console.log('object.loc');
-            // console.log(object.loc);
-            // console.log('mistake5HeaderLocation');
-            // console.log(mistake5HeaderLocation);
-            // console.log('------------------------------------');
         }
         else if (object.key && 
             object.key.value && object.key.value == 'size' && 
             object.value && object.value.value && mistake5Data.isText) {
-                //console.log(object.value);
+                
                 mistake5Data.textSize = object.value.value;
-                //mistake5Data.isHeader = false;
                 mistake5Data.isText = false;
                 mistake5Data.isTextModFound = true;
-                //console.log(mistake1Data);
 
                 mistake5TextSizes.push({
                     size: mistake5Data.textSize,
                     location: mistake5Data.location
                 });
-                // console.log('[findTextSizeMistake5]');
-                // console.log('mistake5TextSizes');
-                // console.log(mistake5TextSizes);
-                // console.log('------------------------------------');
         }
     }
 
@@ -1178,18 +1207,6 @@ export default function(positionOfForms) {
                 );
             }
         });
-
-        // if (isMistake5Exist()) {
-        //     //console.log('MISTAKES');
-        //     mistake5Data.isMistake = true;
-
-        //     resultMistakes.push(
-        //         {"code": listOfMistakesForm[4]["code"],
-        //          "error": listOfMistakesForm[4]["error"],
-        //          "location": mistake5Data.location
-        //         }
-        //     );
-        // }
     }
 
     function isMistake5Exist(textValue) {
@@ -1205,18 +1222,6 @@ export default function(positionOfForms) {
             else return true;
         }
         else return false;
-
-        // if (mistake5Data.inputSize != '' && mistake5Data.textSize != '') {
-        //     let inputSize = listOfSizes[mistake5Data.inputSize];
-        //     let textSize = listOfSizes[mistake5Data.textSize];
-
-        //     if (inputSize != undefined && textSize != undefined && 
-        //         ((textSize - inputSize) == 2)) {
-        //             return false;
-        //     }
-        //     else return true;
-        // }
-        // else return false;
     }
 
     function detectMistake6(object) {

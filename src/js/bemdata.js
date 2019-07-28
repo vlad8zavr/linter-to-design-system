@@ -116,7 +116,7 @@
                                                 "mods": { "size": "l" }
                                         }
                                 },
-                                { "block": "input", "mods": { "size": "l" } },
+                                { "block": "input", "mods": { "align": "center", "size": "l" } },
                                 {
                                     "block": "form",
                                     "elem": "label",
