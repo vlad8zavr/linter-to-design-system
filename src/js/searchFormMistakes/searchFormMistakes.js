@@ -1210,8 +1210,8 @@ export default function(positionOfForms) {
             }
             else return true;
         }
-        //else return false;
-        else return true;
+        else return false;
+        //else return true;
     }
 
     function detectMistake6(object) {
@@ -1321,6 +1321,9 @@ export default function(positionOfForms) {
                     return false;
             }
             else return true;
+        }
+        else if (mistake6Data.inputSize != '' && mistake6Data.formSpaceSize == '') {
+            return true;
         }
         else return false;
     }
