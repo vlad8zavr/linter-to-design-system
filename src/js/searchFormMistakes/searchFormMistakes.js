@@ -557,20 +557,6 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake2(object) {
-        // if (object.value && object.value == 'input') {
-        //     //console.log(object);
-        //     mistake2Data.isInput = true;
-        //     mistake2Data.isInputModFound = false;
-        // }
-        // else if (object.key && 
-        //     object.key.value && object.key.value == 'size' && 
-        //     object.value && object.value.value && mistake2Data.isInput) {
-        //         //console.log(object.value);
-        //         mistake2Data.inputSize = object.value.value;
-        //         mistake2Data.isInput = false;
-        //         mistake2Data.isInputModFound = true;
-
-        // }
 
         if (object.children && object.children.length >= 2 && 
             object.children[0] && object.children[0].value && 
@@ -734,15 +720,15 @@ export default function(positionOfForms) {
             mistake3Data.isElemItem = true;
         }
         
-        // if (mistake3Data.isElemContent) {
-        //     findInputSizeMistake3(object);
-        // }
+        if (mistake3Data.isElemContent) {
+            findInputSizeMistake3(object);
+        }
 
         // if (isMix(object, mistake3Data) && mistake3Data.isElemItem) {
         //     findSpaceHSizeMistake3(object);
         // }
 
-        findInputSizeMistake3(object);
+        //findInputSizeMistake3(object);
         findSpaceHSizeMistake3(object);
 
     }
@@ -782,18 +768,42 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake3(object) {
-        if (object.value && object.value == 'input') {
-            //console.log(object);
-            mistake3Data.isInput = true;
-            mistake3Data.isInputModFound = false;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake3Data.isInput) {
+        // if (object.value && object.value == 'input') {
+        //     //console.log(object);
+        //     mistake3Data.isInput = true;
+        //     mistake3Data.isInputModFound = false;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake3Data.isInput) {
 
-                mistake3Data.inputSize = object.value.value;
-                mistake3Data.isInput = false;
-                mistake3Data.isInputModFound = true;
+        //         mistake3Data.inputSize = object.value.value;
+        //         mistake3Data.isInput = false;
+        //         mistake3Data.isInputModFound = true;
+        // }
+
+        if (object.children && object.children.length >= 2 && 
+            object.children[0] && object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'input' && 
+            object.children[1] && object.children[1].value && object.children[1].key && 
+            object.children[1].key.value && object.children[1].key.value == 'mods') {
+
+            // console.log('[findInputSizeMistake1]');
+            // console.log(object);
+
+            const child = object.children[1].value;
+
+            child.children && child.children.forEach(element => {
+
+                if (element.key && 
+                    element.key.value && element.key.value == 'size' && 
+                    element.value && element.value.value) {
+
+                    mistake3Data.inputSize = element.value.value;
+                    mistake3Data.isInput = false;
+                    mistake3Data.isInputModFound = true;
+                }
+            })
         }
     }
 
@@ -990,18 +1000,42 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake4(object) {
-        if (object.value && object.value == 'input') {
-            //console.log(object);
-            mistake4Data.isInput = true;
-            mistake4Data.isInputModFound = false;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake4Data.isInput) {
+        // if (object.value && object.value == 'input') {
+        //     //console.log(object);
+        //     mistake4Data.isInput = true;
+        //     mistake4Data.isInputModFound = false;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake4Data.isInput) {
 
-                mistake4Data.inputSize = object.value.value;
-                mistake4Data.isInput = false;
-                mistake4Data.isInputModFound = true;
+        //         mistake4Data.inputSize = object.value.value;
+        //         mistake4Data.isInput = false;
+        //         mistake4Data.isInputModFound = true;
+        // }
+
+        if (object.children && object.children.length >= 2 && 
+            object.children[0] && object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'input' && 
+            object.children[1] && object.children[1].value && object.children[1].key && 
+            object.children[1].key.value && object.children[1].key.value == 'mods') {
+
+            // console.log('[findInputSizeMistake1]');
+            // console.log(object);
+
+            const child = object.children[1].value;
+
+            child.children && child.children.forEach(element => {
+
+                if (element.key && 
+                    element.key.value && element.key.value == 'size' && 
+                    element.value && element.value.value) {
+
+                    mistake4Data.inputSize = element.value.value;
+                    mistake4Data.isInput = false;
+                    mistake4Data.isInputModFound = true;
+                }
+            })
         }
     }
 
@@ -1036,10 +1070,6 @@ export default function(positionOfForms) {
         if (mistake4Data.inputSize != '' && mistake4Data.formIndentSize != '') {
             let inputSize = listOfSizes[mistake4Data.inputSize];
             let formIndentSize = listOfSizes[mistake4Data.formIndentSize];
-
-            // console.log('[isMistake4Exist]');
-            // console.log(`mistake4Data.inputSize = ${mistake4Data.inputSize}`);
-            // console.log(`mistake4Data.formIndentSize = ${mistake4Data.formIndentSize}`);
 
             if (inputSize != undefined && formIndentSize != undefined && 
                 ((formIndentSize - inputSize) == 1)) {
@@ -1104,9 +1134,6 @@ export default function(positionOfForms) {
 
             if (object.children[0].value && 
                 object.children[0].value.value && object.children[0].value.value == 'text') {
-        
-                // console.log('[findTextLocation5]');
-                // console.log(`mistake5Data.isHeader = ${mistake5Data.isHeader}`);
 
                 //mistake5Data.isHeader = false;
                 mistake5Data.isText = false;
@@ -1130,17 +1157,6 @@ export default function(positionOfForms) {
                         }
                     };
                 }
-
-                // mistake5Data.location = {
-                //     start: {
-                //         "line": object.loc.start.line, 
-                //         "column": object.loc.start.column
-                //     },
-                //     end: {
-                //         "line": object.loc.end.line, 
-                //         "column": object.loc.end.column
-                //     }
-                // };
             }
         }
     }
@@ -1167,19 +1183,43 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake5(object) {
-        if (object.value && object.value == 'input') {
-            //console.log(object);
-            mistake5Data.isInput = true;
-            mistake5Data.isInputModFound = false;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake5Data.isInput) {
-                //console.log(object.value);
-                mistake5Data.inputSize = object.value.value;
-                mistake5Data.isInput = false;
-                mistake5Data.isInputModFound = true;
-                //console.log(mistake1Data);
+        // if (object.value && object.value == 'input') {
+        //     //console.log(object);
+        //     mistake5Data.isInput = true;
+        //     mistake5Data.isInputModFound = false;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake5Data.isInput) {
+        //         //console.log(object.value);
+        //         mistake5Data.inputSize = object.value.value;
+        //         mistake5Data.isInput = false;
+        //         mistake5Data.isInputModFound = true;
+        //         //console.log(mistake1Data);
+        // }
+
+        if (object.children && object.children.length >= 2 && 
+            object.children[0] && object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'input' && 
+            object.children[1] && object.children[1].value && object.children[1].key && 
+            object.children[1].key.value && object.children[1].key.value == 'mods') {
+
+            // console.log('[findInputSizeMistake1]');
+            // console.log(object);
+
+            const child = object.children[1].value;
+
+            child.children && child.children.forEach(element => {
+
+                if (element.key && 
+                    element.key.value && element.key.value == 'size' && 
+                    element.value && element.value.value) {
+
+                    mistake5Data.inputSize = element.value.value;
+                    mistake5Data.isInput = false;
+                    mistake5Data.isInputModFound = true;
+                }
+            })
         }
     }
 
@@ -1259,20 +1299,44 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake6(object) {
-        if (object.value && object.value == 'input') {
-            //console.log(object);
-            mistake6Data.isInput = true;
-            mistake6Data.isInputModFound = false;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake6Data.isInput) {
-                //console.log(object.value);
-                mistake6Data.inputSize = object.value.value;
-                mistake6Data.isInput = false;
-                mistake6Data.isInputModFound = true;
-                // console.log('[findInputSizeMistake2] value');
-                // console.log(mistake2Data.inputSize);
+        // if (object.value && object.value == 'input') {
+        //     //console.log(object);
+        //     mistake6Data.isInput = true;
+        //     mistake6Data.isInputModFound = false;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake6Data.isInput) {
+        //         //console.log(object.value);
+        //         mistake6Data.inputSize = object.value.value;
+        //         mistake6Data.isInput = false;
+        //         mistake6Data.isInputModFound = true;
+        //         // console.log('[findInputSizeMistake2] value');
+        //         // console.log(mistake2Data.inputSize);
+        // }
+
+        if (object.children && object.children.length >= 2 && 
+            object.children[0] && object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'input' && 
+            object.children[1] && object.children[1].value && object.children[1].key && 
+            object.children[1].key.value && object.children[1].key.value == 'mods') {
+
+            // console.log('[findInputSizeMistake1]');
+            // console.log(object);
+
+            const child = object.children[1].value;
+
+            child.children && child.children.forEach(element => {
+
+                if (element.key && 
+                    element.key.value && element.key.value == 'size' && 
+                    element.value && element.value.value) {
+
+                    mistake6Data.inputSize = element.value.value;
+                    mistake6Data.isInput = false;
+                    mistake6Data.isInputModFound = true;
+                }
+            })
         }
     }
 
@@ -1361,20 +1425,44 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake7(object) {
-        if (object.value && object.value == 'input') {
-            //console.log(object);
-            mistake7Data.isInput = true;
-            mistake7Data.isInputModFound = false;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake7Data.isInput) {
-                //console.log(object.value);
-                mistake7Data.inputSize = object.value.value;
-                mistake7Data.isInput = false;
-                mistake7Data.isInputModFound = true;
-                // console.log('[findInputSizeMistake2] value');
-                // console.log(mistake2Data.inputSize);
+        // if (object.value && object.value == 'input') {
+        //     //console.log(object);
+        //     mistake7Data.isInput = true;
+        //     mistake7Data.isInputModFound = false;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake7Data.isInput) {
+        //         //console.log(object.value);
+        //         mistake7Data.inputSize = object.value.value;
+        //         mistake7Data.isInput = false;
+        //         mistake7Data.isInputModFound = true;
+        //         // console.log('[findInputSizeMistake2] value');
+        //         // console.log(mistake2Data.inputSize);
+        // }
+
+        if (object.children && object.children.length >= 2 && 
+            object.children[0] && object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'input' && 
+            object.children[1] && object.children[1].value && object.children[1].key && 
+            object.children[1].key.value && object.children[1].key.value == 'mods') {
+
+            // console.log('[findInputSizeMistake1]');
+            // console.log(object);
+
+            const child = object.children[1].value;
+
+            child.children && child.children.forEach(element => {
+
+                if (element.key && 
+                    element.key.value && element.key.value == 'size' && 
+                    element.value && element.value.value) {
+
+                    mistake7Data.inputSize = element.value.value;
+                    mistake7Data.isInput = false;
+                    mistake7Data.isInputModFound = true;
+                }
+            })
         }
     }
 
@@ -1467,20 +1555,44 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake8(object) {
-        if (object.value && object.value == 'input') {
-            //console.log(object);
-            mistake8Data.isInput = true;
-            mistake8Data.isInputModFound = false;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake8Data.isInput) {
-                //console.log(object.value);
-                mistake8Data.inputSize = object.value.value;
-                mistake8Data.isInput = false;
-                mistake8Data.isInputModFound = true;
-                // console.log('[findInputSizeMistake2] value');
-                // console.log(mistake2Data.inputSize);
+        // if (object.value && object.value == 'input') {
+        //     //console.log(object);
+        //     mistake8Data.isInput = true;
+        //     mistake8Data.isInputModFound = false;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake8Data.isInput) {
+        //         //console.log(object.value);
+        //         mistake8Data.inputSize = object.value.value;
+        //         mistake8Data.isInput = false;
+        //         mistake8Data.isInputModFound = true;
+        //         // console.log('[findInputSizeMistake2] value');
+        //         // console.log(mistake2Data.inputSize);
+        // }
+
+        if (object.children && object.children.length >= 2 && 
+            object.children[0] && object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'input' && 
+            object.children[1] && object.children[1].value && object.children[1].key && 
+            object.children[1].key.value && object.children[1].key.value == 'mods') {
+
+            // console.log('[findInputSizeMistake1]');
+            // console.log(object);
+
+            const child = object.children[1].value;
+
+            child.children && child.children.forEach(element => {
+
+                if (element.key && 
+                    element.key.value && element.key.value == 'size' && 
+                    element.value && element.value.value) {
+
+                    mistake8Data.inputSize = element.value.value;
+                    mistake8Data.isInput = false;
+                    mistake8Data.isInputModFound = true;
+                }
+            })
         }
     }
 
@@ -1568,20 +1680,44 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake9(object) {
-        if (object.value && object.value == 'input') {
-            //console.log(object);
-            mistake9Data.isInput = true;
-            mistake9Data.isInputModFound = false;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake9Data.isInput) {
-                //console.log(object.value);
-                mistake9Data.inputSize = object.value.value;
-                mistake9Data.isInput = false;
-                mistake9Data.isInputModFound = true;
-                // console.log('[findInputSizeMistake2] value');
-                // console.log(mistake2Data.inputSize);
+        // if (object.value && object.value == 'input') {
+        //     //console.log(object);
+        //     mistake9Data.isInput = true;
+        //     mistake9Data.isInputModFound = false;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake9Data.isInput) {
+        //         //console.log(object.value);
+        //         mistake9Data.inputSize = object.value.value;
+        //         mistake9Data.isInput = false;
+        //         mistake9Data.isInputModFound = true;
+        //         // console.log('[findInputSizeMistake2] value');
+        //         // console.log(mistake2Data.inputSize);
+        // }
+
+        if (object.children && object.children.length >= 2 && 
+            object.children[0] && object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'input' && 
+            object.children[1] && object.children[1].value && object.children[1].key && 
+            object.children[1].key.value && object.children[1].key.value == 'mods') {
+
+            // console.log('[findInputSizeMistake1]');
+            // console.log(object);
+
+            const child = object.children[1].value;
+
+            child.children && child.children.forEach(element => {
+
+                if (element.key && 
+                    element.key.value && element.key.value == 'size' && 
+                    element.value && element.value.value) {
+
+                    mistake9Data.inputSize = element.value.value;
+                    mistake9Data.isInput = false;
+                    mistake9Data.isInputModFound = true;
+                }
+            })
         }
     }
 
@@ -1753,19 +1889,43 @@ export default function(positionOfForms) {
     }
 
     function findInputSizeMistake10(object) {
-        if (object.value && object.value == 'input') {
-            //console.log(object);
-            mistake10Data.isInput = true;
-            mistake10Data.isInputModFound = false;
-        }
-        else if (object.key && 
-            object.key.value && object.key.value == 'size' && 
-            object.value && object.value.value && mistake10Data.isInput) {
-                //console.log(object.value);
-                mistake10Data.inputSize = object.value.value;
-                mistake10Data.isInput = false;
-                mistake10Data.isInputModFound = true;
-                //console.log(mistake1Data);
+        // if (object.value && object.value == 'input') {
+        //     //console.log(object);
+        //     mistake10Data.isInput = true;
+        //     mistake10Data.isInputModFound = false;
+        // }
+        // else if (object.key && 
+        //     object.key.value && object.key.value == 'size' && 
+        //     object.value && object.value.value && mistake10Data.isInput) {
+        //         //console.log(object.value);
+        //         mistake10Data.inputSize = object.value.value;
+        //         mistake10Data.isInput = false;
+        //         mistake10Data.isInputModFound = true;
+        //         //console.log(mistake1Data);
+        // }
+
+        if (object.children && object.children.length >= 2 && 
+            object.children[0] && object.children[0].value && 
+            object.children[0].value.value && object.children[0].value.value == 'input' && 
+            object.children[1] && object.children[1].value && object.children[1].key && 
+            object.children[1].key.value && object.children[1].key.value == 'mods') {
+
+            // console.log('[findInputSizeMistake1]');
+            // console.log(object);
+
+            const child = object.children[1].value;
+
+            child.children && child.children.forEach(element => {
+
+                if (element.key && 
+                    element.key.value && element.key.value == 'size' && 
+                    element.value && element.value.value) {
+
+                    mistake10Data.inputSize = element.value.value;
+                    mistake10Data.isInput = false;
+                    mistake10Data.isInputModFound = true;
+                }
+            })
         }
     }
 
