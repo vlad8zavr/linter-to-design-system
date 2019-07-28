@@ -213,9 +213,10 @@
                                 {
                                     "block": "form",
                                     "elem": "content",
-                                    "content": { "block": "input", "mods": { "size": "l" } },
+                                    "content": {},
                                     "mix": [{ "block": "form", "elem": "item", "elemMods": {  "space-h": "xxl" } }]
-                                }
+                                },
+                                { "block": "input", "mods": { "size": "xs" } }
                             ]
                         },
                         {
