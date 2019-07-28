@@ -195,7 +195,6 @@
                                     {
                                         "block": "form",
                                         "elem":  "content-item",
-                                        "mix": [{ "block": "form", "elem": "item", "elemMods": { "indent-b": "xl" } }],
                                         "content": { "block": "input", "mods": { "size": "l" } }
                                     }
                                 ]
